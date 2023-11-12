@@ -42,8 +42,9 @@ public class GamePanel extends JPanel {
 	// 화면을 그림
 	@Override
 	protected void paintComponent(Graphics g) {
-		
+
 		Graphics2D g2 = (Graphics2D) bufferg; 
+
 		// 장애물을 그림
 		for (int i = 0; i < obstacleList.size(); i++) {
 
@@ -55,6 +56,7 @@ public class GamePanel extends JPanel {
 						tempObstacle.getHeight(), null);
 			}
 		}
+
 		for (int i = 0; i < scoreList.size(); i++) {
 
 			Score tempScore = scoreList.get(i);
@@ -73,6 +75,7 @@ public class GamePanel extends JPanel {
 				g2.setComposite(alphaComposite);
 			}
 		}
+
 		// 버퍼 이미지를 화면에 출력
 		g.drawImage(bufferImage, 0, 0, this);
 	}
