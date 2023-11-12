@@ -41,12 +41,12 @@ public class StoryPanel extends JPanel{
 		addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                // mousePressed ÀÌº¥Æ®°¡ ¹ß»ıÇÒ  ´ÙÀ½ ½ºÅä¸® ÀÌ¹ÌÁö·Î ÀüÈ¯
+                // mousePressed ì´ë²¤íŠ¸ê°€ ë°œìƒí•   ë‹¤ìŒ ìŠ¤í† ë¦¬ ì´ë¯¸ì§€ë¡œ ì „í™˜
                 currentImageIndex++;
                 if (currentImageIndex < storyImages.length) {
-                    repaint(); // È­¸é ´Ù½Ã ±×¸®±â
+                    repaint(); // í™”ë©´ ë‹¤ì‹œ ê·¸ë¦¬ê¸°
                 } else {
-                    // ½ºÅä¸®°¡ ³¡³µÀ» ¶§ ´ÙÀ½ È­¸éÀ¸·Î ÀüÈ¯ÇÏ´Â ÄÚµå
+                	// ìŠ¤í† ë¦¬ê°€ ëë‚¬ì„ ë•Œ ë‹¤ìŒ í™”ë©´ìœ¼ë¡œ ì „í™˜í•˜ëŠ” ì½”ë“œ
                     cardLayout.show(superFrame.getContentPane(), "nextPanelName");
                 }
             }
@@ -56,7 +56,7 @@ public class StoryPanel extends JPanel{
 		protected void paintComponent(Graphics g) {
 		    super.paintComponent(g);
 		    
-		    // ÇöÀç ½ºÅä¸® ÀÌ¹ÌÁö ±×¸®±â
+		  // í˜„ì¬ ìŠ¤í† ë¦¬ ì´ë¯¸ì§€ ê·¸ë¦¬ê¸°
 		    if (currentImageIndex < storyImages.length) {
 		        ImageIcon currentImage = storyImages[currentImageIndex];
 		        g.drawImage(currentImage.getImage(), 0, 0, getWidth(), getHeight(), this);

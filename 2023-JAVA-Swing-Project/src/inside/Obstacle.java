@@ -4,19 +4,19 @@ import java.awt.Image;
 
 public class Obstacle {
 
-	private Image image; // Àå¾Ö¹° ÀÌ¹ÌÁö
+	private Image image; // ì¥ì• ë¬¼ ì´ë¯¸ì§€
 
-	// Àå¾Ö¹° Å©±â ¹× ÁÂÇ¥
+	// ì¥ì• ë¬¼ í¬ê¸° ë° ì¢Œí‘œ
 	private int x;
 	private int y;
 	private int width;
 	private int height;
 
-	// Àå¾Ö¹° »óÅÂ
-	private int speed = 0; // death Àå¾Ö¹° ¼Óµµ
-	private int countAttack = 0; // 2´Ü Àå¾Ö¹°ÀÌ °ø°İ¹ŞÀº È½¼ö Ä«¿îÆ®
+	// ì¥ì• ë¬¼ ìƒíƒœ
+	private int speed = 0; // death ì¥ì• ë¬¼ ì†ë„
+	private int countAttack = 0; // 2ë‹¨ ì¥ì• ë¬¼ì´ ê³µê²©ë°›ì€ íšŸìˆ˜ ì¹´ìš´íŠ¸
 
-	private boolean death = false; // death Àå¾Ö¹° ±¸ºĞ
+	private boolean death = false; // death ì¥ì• ë¬¼ êµ¬ë¶„
 
 	public int getX() {
 		return x;
