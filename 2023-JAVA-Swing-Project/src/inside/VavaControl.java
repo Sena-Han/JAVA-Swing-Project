@@ -105,5 +105,5 @@ public class VavaControl implements KeyListener {
 //
 //            // 예시: 부수고 난 후의 처리
 //            handleObstacleDestroyed();
-        }
     }
+}
