@@ -46,7 +46,9 @@ public class StoryPanel extends JPanel{
                 if (currentImageIndex < storyImages.length) {
                     repaint(); // 화면 다시 그리기
                 } else {
+
                 	// 스토리가 끝났을 때 다음 화면으로 전환하는 코드
+
                     cardLayout.show(superFrame.getContentPane(), "nextPanelName");
                 }
             }
@@ -57,6 +59,7 @@ public class StoryPanel extends JPanel{
 		    super.paintComponent(g);
 		    
 		  // 현재 스토리 이미지 그리기
+
 		    if (currentImageIndex < storyImages.length) {
 		        ImageIcon currentImage = storyImages[currentImageIndex];
 		        g.drawImage(currentImage.getImage(), 0, 0, getWidth(), getHeight(), this);
