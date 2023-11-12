@@ -1,4 +1,3 @@
-// VavaAttack.java
 package inside;
 
 import java.awt.Image;
@@ -15,7 +14,7 @@ public class VavaAttack {
     public VavaAttack() {
         attackballX = -1; 
         attackballY = -1; 
-        attackballImage = Toolkit.getDefaultToolkit().getImage("fireball.png");
+        attackballImage = Toolkit.getDefaultToolkit().getImage("attackball.png");
         attackballWidth = attackballImage.getWidth(null); 
         attackballHeight = attackballImage.getHeight(null); 
     }
@@ -38,9 +37,9 @@ public class VavaAttack {
     }
 
 public void updateGraphics() {
-    // 공격에 관련된 그래픽 업데이트 코드 작성
+    // 공격에 관련된 그래픽 업데이트 코드
     if (isAttacking) {
-        attackballX += 5; // 예시로 5 픽셀씩 이동
+        attackballX += 5; // 5 픽셀씩 이동
     }
 }
 
