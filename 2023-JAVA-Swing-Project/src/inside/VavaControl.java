@@ -1,19 +1,42 @@
 package inside;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class VavaControl implements KeyListener {
 	private boolean canDoubleJump = false; // 2단 점프 가능 여부를 추적
     private boolean isJumping = false; // 현재 점프 중인지 여부를 추적
+    
+    // 추가: 타이머로 그래픽 업데이트를 처리하기 위한 변수들
+    private Timer timer;
+    private int backgroundX = 0;
+    private int platformX = 0;
 
     public VavaControl() {
-        // Default constructor
+    	// 추가: 타이머 초기화
+        timer = new Timer(16, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 타이머마다 실행되는 코드
+                updateGraphics();
+            }
+        });
+        timer.start();
     }
 
     public VavaControl(boolean canDoubleJump, boolean isJumping) {
         this.canDoubleJump = canDoubleJump;
         this.isJumping = isJumping;
+    }
+    
+    private void updateGraphics() {
+        // 그래픽 업데이트 코드를 여기에 추가
+        // 예를 들어, 배경이나 발판을 그리는 코드를 작성
+        backgroundX--;
+        platformX--;
     }
 
     public boolean isCanDoubleJump() {
@@ -72,5 +95,13 @@ public class VavaControl implements KeyListener {
     private void attack() {
         // 공격 로직을 여기에 작성
         // 적 공격, 애니메이션 등을 처리
+
+        // 예시: 특정 조건에서 장애물 부수기
+//        if (checkCollisionWithObstacle()) {
+//            System.out.println("공격으로 장애물 부수기");
+//            // 부수기 로직을 추가
+//
+//            // 예시: 부수고 난 후의 처리
+//            handleObstacleDestroyed();
+        }
     }
-}
