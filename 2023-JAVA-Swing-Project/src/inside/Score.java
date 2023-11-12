@@ -10,7 +10,9 @@ public class Score {
 	private int y;
 	private int width;
 	private int height;
-
+	// 젤리 먹으면 투명해지게 하도록 하는 투명도 조절 변수
+	private int alpha;
+	
 	// 스코어 점수
 	private int score;
 
@@ -53,4 +55,10 @@ public class Score {
 	public void setImage(Image image) {
 		this.image = image;
 	}
+
+	public float getAlpha() {
+		return alpha;
+	}
+
+
 }
