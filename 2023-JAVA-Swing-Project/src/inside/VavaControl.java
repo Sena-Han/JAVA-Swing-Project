@@ -4,8 +4,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class VavaControl implements KeyListener {
-    private boolean canDoubleJump = false; // 2´Ü Á¡ÇÁ °¡´É ¿©ºÎ¸¦ ÃßÀû
-    private boolean isJumping = false; // ÇöÀç Á¡ÇÁ ÁßÀÎÁö ¿©ºÎ¸¦ ÃßÀû
+    private boolean canDoubleJump = false; // 2ë‹¨ ì í”„ ê°€ëŠ¥ ì—¬ë¶€ë¥¼ ì¶”ì 
+    private boolean isJumping = false; // í˜„ì¬ ì í”„ ì¤‘ì¸ì§€ ì—¬ë¶€ë¥¼ ì¶”ì 
 
     public VavaControl() {
         // Default constructor
@@ -37,40 +37,40 @@ public class VavaControl implements KeyListener {
         int keyCode = e.getKeyCode();
         if (keyCode == KeyEvent.VK_UP) {
             if (!isJumping) {
-                // 1´Ü Á¡ÇÁ
+                // 1ë‹¨ ì í”„
                 jump();
-                System.out.println("1´Ü Á¡ÇÁ");
+                System.out.println("1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             } else if (canDoubleJump) {
-                // 2´Ü Á¡ÇÁ
+                // 2ë‹¨ ì í”„
                 jump();
-                System.out.println("2´Ü Á¡ÇÁ");
+                System.out.println("2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 canDoubleJump = false;
             }
         } else if (keyCode == KeyEvent.VK_RIGHT) {
-            // ¿ìÃøÅ°·Î °ø°İ
+            // ìš°ì¸¡í‚¤ë¡œ ê³µê²©
             attack();
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // Å°¸¦ ¶¿ ¶§
+        // í‚¤ë¥¼ ë—„ ë•Œ
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // Å°¸¦ Å¸ÀÌÇÎÇÒ ¶§
+        // í‚¤ë¥¼ íƒ€ì´í•‘í•  ë•Œ
     }
 
-    // Ä³¸¯ÅÍÀÇ Á¡ÇÁ µ¿ÀÛÀ» Ã³¸®
+    // ìºë¦­í„°ì˜ ì í”„ ë™ì‘ì„ ì²˜ë¦¬
     private void jump() {
-        // Á¡ÇÁ ·ÎÁ÷À» ¿©±â¿¡ ÀÛ¼º
-        // isJumping »óÅÂ¸¦ º¯°æÇÏ°í Á¡ÇÁ ¾Ö´Ï¸ŞÀÌ¼Ç µîÀ» Ã³¸®
+        // ì í”„ ë¡œì§ì„ ì—¬ê¸°ì— ì‘ì„±
+        // isJumping ìƒíƒœë¥¼ ë³€ê²½í•˜ê³  ì í”„ ì• ë‹ˆë©”ì´ì…˜ ë“±ì„ ì²˜ë¦¬
     }
 
-    // Ä³¸¯ÅÍÀÇ °ø°İ µ¿ÀÛÀ» Ã³¸®
+    // ìºë¦­í„°ì˜ ê³µê²© ë™ì‘ì„ ì²˜ë¦¬
     private void attack() {
-        // °ø°İ ·ÎÁ÷À» ¿©±â¿¡ ÀÛ¼º
-        // Àû °ø°İ, ¾Ö´Ï¸ŞÀÌ¼Ç µîÀ» Ã³¸®
+        // ê³µê²© ë¡œì§ì„ ì—¬ê¸°ì— ì‘ì„±
+        // ì  ê³µê²©, ì• ë‹ˆë©”ì´ì…˜ ë“±ì„ ì²˜ë¦¬
     }
 }

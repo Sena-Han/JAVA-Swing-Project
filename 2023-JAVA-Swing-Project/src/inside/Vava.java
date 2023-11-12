@@ -4,26 +4,26 @@ import java.awt.Image;
 
 public class Vava {
 
-	private Image image; // ¹Ù¹Ù ÀÌ¹ÌÁö
+	private Image image; // ë°”ë°” ì´ë¯¸ì§€
 
-	// ¹Ù¹Ù Å©±â ¹× ÁÂÇ¥
+	// ë°”ë°” í¬ê¸° ë° ì¢Œí‘œ
 	private int x = 0;
 	private int y = 0;
 	private int width = 0;
 	private int height = 0;
 
-	// ¹Ù¹Ù »óÅÂ
-	private int hp = 1000; // ¹Ù¹Ù Ã¼·Â
-	private int alpha = 255; // ¹Ù¹Ù Åõ¸íµµ
+	// ë°”ë°” ìƒíƒœ
+	private int hp = 1000; // ë°”ë°” ì²´ë ¥
+	private int alpha = 255; // ë°”ë°” íˆ¬ëª…ë„
 
-	private int big = 0; // °Å´ëÈ­ ³²Àº ½Ã°£
-	private int fast = 0; // °¡¼ÓÈ­ ³²Àº ½Ã°£
+	private int big = 0; // ê±°ëŒ€í™” ë‚¨ì€ ì‹œê°„
+	private int fast = 0; // ê°€ì†í™” ë‚¨ì€ ì‹œê°„
 
-	private int countJump = 0; // Á¡ÇÁ È½¼ö
+	private int countJump = 0; // ì í”„ íšŸìˆ˜
 
-	private boolean invincible = false; // ¹«Àû ¿©ºÎ
-	private boolean fall = false; // ³«ÇÏ ¿©ºÎ
-	private boolean jump = false; // Á¡ÇÁ ¿©ºÎ
+	private boolean invincible = false; // ë¬´ì  ì—¬ë¶€
+	private boolean fall = false; // ë‚™í•˜ ì—¬ë¶€
+	private boolean jump = false; // ì í”„ ì—¬ë¶€
 
 	public Vava(Image image) {
 		this.setImage(image);

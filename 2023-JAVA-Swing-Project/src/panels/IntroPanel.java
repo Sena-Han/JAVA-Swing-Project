@@ -11,13 +11,13 @@ import javax.swing.JPanel;
 
 public class IntroPanel extends JPanel {
 	
-	ImageIcon introImg = new ImageIcon("img/intro/intro.jpg"); // ÀÎÆ®·Î ÀÌ¹ÌÁö
+	ImageIcon introImg = new ImageIcon("img/intro/intro.jpg"); // ì¸íŠ¸ë¡œ ì´ë¯¸ì§€
 	
 	@Override
 	protected void paintComponent(Graphics g) {
-		super.paintComponent(g); // È­¸éÀ» ºñ¿î´Ù
+		super.paintComponent(g); // í™”ë©´ì„ ë¹„ìš´ë‹¤
 		
-		// ÀÎÆ®·Î È­¸éÀ» ±×¸°´Ù
+		// ì¸íŠ¸ë¡œ í™”ë©´ì„ ê·¸ë¦°ë‹¤
 		g.drawImage(introImg.getImage(), 0, 0, getWidth(), getHeight(), null);
 
 	}
