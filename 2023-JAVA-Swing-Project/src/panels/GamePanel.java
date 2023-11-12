@@ -47,6 +47,11 @@ public class GamePanel extends JPanel {
 	private ImageIcon scoreB = new ImageIcon(""); // B학점 이미지를 통해 B스코어 생성
 	private ImageIcon scoreC = new ImageIcon(""); // C학점 이미지를 통해 C스코어 생성
 	
+	//VavaAttack
+	private Image attackballImage; // 어택볼 이미지 추가
+
+
+	
 	// life(Hp)
 	private ImageIcon lifeBar; // hp 게이지
 	
