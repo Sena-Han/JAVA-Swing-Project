@@ -25,6 +25,10 @@ import main.Main;
 public class GamePanel extends JPanel {
 	// vava
 	private ImageIcon vavaIc; // 기본 모션
+	private ImageIcon jumpIc; // 점프 모션
+	private ImageIcon doubleJumpIc; // 2단 점프 모션
+	private ImageIcon fallIc; // 2단 점프 후 낙하 모션
+	private ImageIcon attackIc; // 공격 모션
 	private ImageIcon hitIc; // 충돌 모션
 	
 	// screen
@@ -32,28 +36,34 @@ public class GamePanel extends JPanel {
 	private ImageIcon backScreenImg2;
 	private ImageIcon backScreenImg3;
 	private ImageIcon backScreenImg4;
-
+	
 	// obstacle
-	private ImageIcon obstacle1 = new ImageIcon(""); // 1칸 장애물
-	private ImageIcon obstacle2 = new ImageIcon(""); // 2칸 장애물
-	private ImageIcon obstacleFly = new ImageIcon(""); // death 장애물
+	private ImageIcon obstacle1; // 1단 장애물
+	private ImageIcon obstacle2; // 2단 장애물
+	private ImageIcon obstacleFly; // death 장애물
 
 	// score
 	private ImageIcon scoreA = new ImageIcon(""); // A학점 이미지를 통해 A스코어 생성
 	private ImageIcon scoreB = new ImageIcon(""); // B학점 이미지를 통해 B스코어 생성
 	private ImageIcon scoreC = new ImageIcon(""); // C학점 이미지를 통해 C스코어 생성
+	
+	// life(Hp)
+	private ImageIcon lifeBar; // hp 게이지
+	
+	// hit
+	private ImageIcon redScreenIc; // 충돌 시 레드스크린
 
 	// list
-	private List<Obstacle> obstacleList = new ArrayList<>(); // 장애물 리스트
+	private List<Obstacle> obstacleList; // 장애물 리스트
 	private List<Score> scoreList = new ArrayList<>(); // 스코어 리스트
 	
 	// 변수
 	private int sumScore = 0; // 결과점수 변수 (누적 score)
 	
 	private boolean fadeOn = false;
-	private boolean redScreen = false; // 충돌 시 레드스크린
+	private boolean redScreen = false; // 충돌 시 레드스크린 여부
 	
-	private AlphaComposite alphaComposite; // 투명도 객체
+	private AlphaComposite alphaComposite; // 투명도 관련
 	
 	// 더블 버퍼링 이미지
 	private Image bufferImage;
@@ -82,7 +92,7 @@ public class GamePanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 
-		Graphics2D g2 = (Graphics2D) bufferg;
+		Graphics2D g2D = (Graphics2D) bufferg;
 		
 		// 더블 버퍼
 		if (bufferg == null) {
@@ -108,6 +118,18 @@ public class GamePanel extends JPanel {
 			}
 		}
 		
+		// 충돌 시 레드스크린
+		if (redScreen) {
+
+			alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 125 / 255);
+			g2D.setComposite(alphaComposite);
+
+			bufferg.drawImage(redScreenIc.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+
+			alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 255 / 255);
+			g2D.setComposite(alphaComposite);
+		}
+		
 		// score(학점)를 그림
 		for (int i = 0; i < scoreList.size(); i++) {
 
@@ -117,14 +139,14 @@ public class GamePanel extends JPanel {
 
 				alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
 						(float) tempScore.getAlpha() / 255);
-				g2.setComposite(alphaComposite); // 투명화
+				g2D.setComposite(alphaComposite); // 투명화
 
 				bufferg.drawImage(tempScore.getImage(), tempScore.getX(), tempScore.getY(), tempScore.getWidth(),
 						tempScore.getHeight(), null);
 
 				// alpha값을 되돌림
 				alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 255 / 255);
-				g2.setComposite(alphaComposite);
+				g2D.setComposite(alphaComposite);
 			}
 		}
 		
