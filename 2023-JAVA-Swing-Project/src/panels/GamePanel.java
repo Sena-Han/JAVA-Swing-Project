@@ -23,16 +23,15 @@ import inside.Vava;
 import main.Main;
 
 public class GamePanel extends JPanel {
+	// vava
+	private ImageIcon vavaIc; // 기본 모션
+	private ImageIcon hitIc; // 충돌 모션
 	
-	//screen
+	// screen
 	private ImageIcon backScreenImg;
 	private ImageIcon backScreenImg2;
 	private ImageIcon backScreenImg3;
 	private ImageIcon backScreenImg4;
-
-	// 더블 버퍼링 이미지
-	private Image bufferImage;
-	private Graphics bufferg;
 
 	// obstacle
 	private ImageIcon obstacle1 = new ImageIcon(""); // 1칸 장애물
@@ -44,14 +43,21 @@ public class GamePanel extends JPanel {
 	private ImageIcon scoreB = new ImageIcon(""); // B학점 이미지를 통해 B스코어 생성
 	private ImageIcon scoreC = new ImageIcon(""); // C학점 이미지를 통해 C스코어 생성
 
+	// list
 	private List<Obstacle> obstacleList = new ArrayList<>(); // 장애물 리스트
 	private List<Score> scoreList = new ArrayList<>(); // 스코어 리스트
 	
-	private AlphaComposite alphaComposite; // 투명도 관련 변수
-	
+	// 변수
 	private int sumScore = 0; // 결과점수 변수 (누적 score)
 	
 	private boolean fadeOn = false;
+	private boolean redScreen = false; // 충돌 시 레드스크린
+	
+	private AlphaComposite alphaComposite; // 투명도 객체
+	
+	// 더블 버퍼링 이미지
+	private Image bufferImage;
+	private Graphics bufferg;
 
 	Vava v1; // 바바 객체
 	
@@ -78,10 +84,14 @@ public class GamePanel extends JPanel {
 
 		Graphics2D g2 = (Graphics2D) bufferg;
 		
-		if (bufferg==null) {
+		// 더블 버퍼
+		if (bufferg == null) {
 			bufferImage = createImage(this.getWidth(), this.getHeight());
-			if (bufferImage == null) System.out.println("더블 버퍼링용 오프 스크 생성 실패");
-			else bufferg = bufferImage.getGraphics();
+			
+			if (bufferImage == null) 
+				System.out.println("스크린 생성 실패");
+			else 
+				bufferg = bufferImage.getGraphics();
 		}
 		
 		super.paintComponent(bufferg);
@@ -130,5 +140,61 @@ public class GamePanel extends JPanel {
 
 		// 버퍼 이미지를 화면에 출력
 		g.drawImage(bufferImage, 0, 0, this);
+	}
+	
+	// 장애물 충돌
+	private void hit() {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+
+				v1.setInvincible(true); // 충돌했으므로 vava를 무적 상태로 변환함.
+
+				System.out.println("vava 무적 상태");
+
+				redScreen = true; // 충돌되어 레드스크린 on
+
+				v1.setHp(v1.getHp() - 50); // 충돌하여 vava 체력 감소. 수치는 나중에 수정.
+				v1.setImage(hitIc.getImage()); // vava 충돌 모션으로 변경.
+				v1.setAlpha(60); // vava 투명도 변경. 수치는 나중에 수정.
+
+				try {
+					Thread.sleep(250); // 0.5초 대기시킴. 수치는 나중에 수정.
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				redScreen = false; // 레드스크린 off
+
+				try {
+					Thread.sleep(250);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				if (v1.getImage() == hitIc.getImage()) // 0.5초 동안 이미지가 바뀌지 않았다면 기본이미지로 변경
+					v1.setImage(vavaIc.getImage());
+
+				for (int j = 0; j < 11; j++) { // 충돌하여 무적 상태임을 보여주기 위해 2.5초간 vava가 깜빡거림.
+
+					if (v1.getAlpha() == 60) // 수치는 나중에 수정
+						v1.setAlpha(160);
+					else
+						v1.setAlpha(60);
+					
+					try {
+						Thread.sleep(250);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+
+				v1.setAlpha(255); // vava 투명도 원상 복귀.
+
+				v1.setInvincible(false); // vava 무적 상태 off
+				System.out.println("vava 무적 상태 종료");
+			}
+		}).start();
 	}
 }
