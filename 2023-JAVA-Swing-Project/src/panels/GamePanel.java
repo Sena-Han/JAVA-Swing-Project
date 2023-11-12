@@ -14,12 +14,14 @@ import inside.Vava;
 
 public class GamePanel extends JPanel {
 
+	// 더블 버퍼링 이미지
 	private Image bufferImage;
 	private Graphics bufferg;
 
-	private ImageIcon obstacle1; // 1칸 장애물
-	private ImageIcon obstacle2; // 2칸 장애물
-	private ImageIcon obstacleFly; // death 장애물
+	// obstacle
+	private ImageIcon obstacle1 = new ImageIcon(""); // 1칸 장애물
+	private ImageIcon obstacle2 = new ImageIcon(""); // 2칸 장애물
+	private ImageIcon obstacleFly = new ImageIcon(""); // death 장애물
 
 	// score
 	private ImageIcon scoreA = new ImageIcon(""); // A학점 이미지를 통해 A스코어 생성
@@ -32,4 +34,23 @@ public class GamePanel extends JPanel {
 	private int sumScore = 0; // 결과점수 변수 (누적 score)
 
 	Vava v1; // 바바 객체
+	
+	// 화면을 그림
+	@Override
+	protected void paintComponent(Graphics g) {
+		// 장애물을 그림
+		for (int i = 0; i < obstacleList.size(); i++) {
+
+			Obstacle tempObstacle = obstacleList.get(i);
+
+			if (tempObstacle.getX() > 0 && tempObstacle.getX() < 100) { // 나중에 좌표 수정해야함
+				
+				bufferg.drawImage(tempObstacle.getImage(), tempObstacle.getX(), tempObstacle.getY(), tempObstacle.getWidth(),
+						tempObstacle.getHeight(), null);
+			}
+		}
+		
+		// 버퍼 이미지를 화면에 출력
+		g.drawImage(bufferImage, 0, 0, this);
+	}
 }
