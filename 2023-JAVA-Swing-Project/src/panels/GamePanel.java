@@ -20,7 +20,10 @@ import inside.Obstacle;
 import inside.Score;
 import inside.Screen;
 import inside.Vava;
+import inside.VavaAttack;
+
 import main.Main;
+
 
 public class GamePanel extends JPanel {
 	// vava
@@ -49,7 +52,7 @@ public class GamePanel extends JPanel {
 	
 	//VavaAttack
 	private Image attackballImage; // 어택볼 이미지 추가
-
+	private VavaAttack vavaAttack; // vavaAttack 객체 선언
 
 	
 	// life(Hp)
@@ -91,12 +94,25 @@ public class GamePanel extends JPanel {
 		this.superFrame = superFrame;
 		this.cardLayout = cardLayout;
 		this.main = (Main)o;
+		
+		 // vavaAttack 객체 초기화
+        vavaAttack = new VavaAttack();
 	}
+	
+	
 	
 	// 화면을 그림
 	@Override
 	protected void paintComponent(Graphics g) {
+		
+		// Vava 이미지 그리기
+		bufferg.drawImage(v1.getImage(), v1.getX(), v1.getY(), v1.getWidth(), v1.getHeight(), null);
 
+		// 어택볼 그리기
+		if (vavaAttack.isAttacking()) {
+		    bufferg.drawImage(vavaAttack.getAttackballImage(), vavaAttack.getAttackballX(), vavaAttack.getAttackballY(),
+		            vavaAttack.getAttackballWidth(), vavaAttack.getAttackballHeight(), null);
+		    
 		Graphics2D g2D = (Graphics2D) bufferg;
 		
 		// 더블 버퍼
