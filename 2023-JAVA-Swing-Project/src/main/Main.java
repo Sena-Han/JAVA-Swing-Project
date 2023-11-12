@@ -17,9 +17,9 @@ import main.ListenAdapter;
 
 
 public class Main extends ListenAdapter {
-	private JFrame frame; // Ã¢À» ¶ç¿ì±â À§ÇÑ ÇÁ·¹ÀÓ
-	private IntroPanel introPanel; // ÀÎÆ®·Î
-	private StoryPanel storyPanel; //¹Ù¹Ù ½ºÅä
+	private JFrame frame; // ì°½ì„ ë„ìš°ê¸° ìœ„í•œ í”„ë ˆì„
+	private IntroPanel introPanel; // ì¸íŠ¸ë¡œ
+	private StoryPanel storyPanel; //ë°”ë°” ìŠ¤í† ë¦¬
 	private CardLayout cardLayout;
 
 	
@@ -42,34 +42,34 @@ public class Main extends ListenAdapter {
 	
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 800, 500); // Ã¢ »çÀÌÁî (100,100ÁÂÇ¥´Â ¾Æ·¡ÀÇ frame.setLocationRelativeTo(null) ¶§¹®¿¡ ÀÇ¹Ì°¡ ¾ø¾îÁø´Ù)
-		frame.setLocationRelativeTo(null); // Ã¢À» È­¸é Áß¾Ó¿¡ ¹èÄ¡
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ¿¢½º¹öÆ°À» ´©¸£¸é Á¾·á
+		frame.setBounds(100, 100, 800, 500); // ì°½ ì‚¬ì´ì¦ˆ (100,100ì¢Œí‘œëŠ” ì•„ë˜ì˜ frame.setLocationRelativeTo(null) ë•Œë¬¸ì— ì˜ë¯¸ê°€ ì—†ì–´ì§„ë‹¤)
+		frame.setLocationRelativeTo(null); // ì°½ì„ í™”ë©´ ì¤‘ì•™ì— ë°°ì¹˜
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ì—‘ìŠ¤ë²„íŠ¼ì„ ëˆ„ë¥´ë©´ ì¢…ë£Œ
 		
-		cardLayout = new CardLayout(0, 0); // Ä«µå·¹ÀÌ¾Æ¿ô °´Ã¼ »ı¼º
-		frame.getContentPane().setLayout(cardLayout); // ÇÁ·¹ÀÓÀ» Ä«µå·¹ÀÌ¾Æ¿ôÀ¸·Î º¯°æ
+		cardLayout = new CardLayout(0, 0); // ì¹´ë“œë ˆì´ì•„ì›ƒ ê°ì²´ ìƒì„±
+		frame.getContentPane().setLayout(cardLayout); // í”„ë ˆì„ì„ ì¹´ë“œë ˆì´ì•„ì›ƒìœ¼ë¡œ ë³€ê²½
 
 		introPanel = new IntroPanel();
-		introPanel.addMouseListener(this); // introÆĞ³ÎÀº ¿©±â¼­ ¹Ù·Î ³Ö´Â ¹æ½ÄÀ¸·Î ¸¶¿ì½º¸®½º³Ê¸¦ Ãß°¡ÇÔ.
+		introPanel.addMouseListener(this); // introíŒ¨ë„ì€ ì—¬ê¸°ì„œ ë°”ë¡œ ë„£ëŠ” ë°©ì‹ìœ¼ë¡œ ë§ˆìš°ìŠ¤ë¦¬ìŠ¤ë„ˆë¥¼ ì¶”ê°€í•¨.
 		storyPanel = new StoryPanel(frame, cardLayout, this);
 		storyPanel.addMouseListener(this);
 		
 		introPanel.setLayout(null);
 		
-		// ÇÁ·¹ÀÓ¿¡ ÆĞ³ÎµéÀ» Ãß°¡ÇÑ´Ù.(Ä«µå ·¹ÀÌ¾Æ¿ôÀ» À§ÇÑ ÆĞ³Îµé)
+		// í”„ë ˆì„ì— íŒ¨ë„ë“¤ì„ ì¶”ê°€í•œë‹¤.(ì¹´ë“œ ë ˆì´ì•„ì›ƒì„ ìœ„í•œ íŒ¨ë„ë“¤)
 		frame.getContentPane().add(introPanel, "intro");
 		frame.getContentPane().add(storyPanel, "story");
 		}
 	@Override
-	public void mousePressed(MouseEvent e) { // mouseClicked·Î º¯°æ°¡´É
-		if (e.getComponent().toString().contains("IntroPanel")) { // IntroPanel¿¡¼­ ¸¶¿ì½º¸¦ ´­·¶´Ù¸é
+	public void mousePressed(MouseEvent e) { // mouseClickedë¡œ ë³€ê²½ê°€ëŠ¥
+		if (e.getComponent().toString().contains("IntroPanel")) { // IntroPanelì—ì„œ ë§ˆìš°ìŠ¤ë¥¼ ëˆŒë €ë‹¤ë©´
 			try {
 				Thread.sleep(300);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
-			cardLayout.show(frame.getContentPane(), "story"); // selectÆĞ³ÎÀ» Ä«µå·¹ÀÌ¾Æ¿ô ÃÖ»ó´ÜÀ¸·Î º¯°æ
-			storyPanel.requestFocus(); // ¸®½º³Ê¸¦ selectÆĞ³Î¿¡ °­Á¦·Î ÁÜ
+			cardLayout.show(frame.getContentPane(), "story"); // selectíŒ¨ë„ì„ ì¹´ë“œë ˆì´ì•„ì›ƒ ìµœìƒë‹¨ìœ¼ë¡œ ë³€ê²½
+			storyPanel.requestFocus(); // ë¦¬ìŠ¤ë„ˆë¥¼ selectíŒ¨ë„ì— ê°•ì œë¡œ ì¤Œ
 			
 			
 		} 				
