@@ -56,7 +56,7 @@ public class GamePanel extends JPanel {
 						tempObstacle.getHeight(), null);
 			}
 		}
-
+		// score(학점)를 그림
 		for (int i = 0; i < scoreList.size(); i++) {
 
 			Score tempScore = scoreList.get(i);
@@ -65,12 +65,12 @@ public class GamePanel extends JPanel {
 
 				alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
 						(float) tempScore.getAlpha() / 255);
-				g2.setComposite(alphaComposite); // 투명하게 하는방법 2
+				g2.setComposite(alphaComposite); // 투명화
 
 				bufferg.drawImage(tempScore.getImage(), tempScore.getX(), tempScore.getY(), tempScore.getWidth(),
 						tempScore.getHeight(), null);
 
-				// alpha값을 되돌린다
+				// alpha값을 되돌림
 				alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 255 / 255);
 				g2.setComposite(alphaComposite);
 			}
