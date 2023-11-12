@@ -8,8 +8,8 @@ import java.awt.event.KeyListener;
 
 public class VavaControl implements KeyListener {
 
-    private boolean canDoubleJump = false; // 2단 점프 가능 여부를 추적
-    private boolean isJumping = false; // 현재 점프 중인지 여부를 추적
+    private boolean canDoubleJump = false; // 2단 점프 가능 여부 추적
+    private boolean isJumping = false; // 현재 점프 중인지 여부 추적
     
     // 추가: 타이머로 그래픽 업데이트를 처리하기 위한 변수들
     private Timer timer;
