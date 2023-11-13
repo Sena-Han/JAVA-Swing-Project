@@ -3,7 +3,10 @@ package inside;
 import java.awt.Image;
 
 public class Screen {
-    private Image image;
+	
+    private Image image; // 스크린 이미지
+    
+    // 스크린 크기 및 좌표
     private int x;
     private int y;
     private int width;

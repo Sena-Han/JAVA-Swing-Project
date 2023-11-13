@@ -4,7 +4,7 @@ import java.awt.Image;
 
 public class Obstacle {
 
-	private Image image; // 장애물 이미지
+	private Image image;  // 장애물 이미지
 
 	// 장애물 크기 및 좌표
 	private int x;
@@ -12,7 +12,6 @@ public class Obstacle {
 	private int width;
 	private int height;
 
-	// 장애물 상태
 	private int speed = 0; // death 장애물 속도
 	private int countAttack = 0; // 2단 장애물이 공격받은 횟수 카운트
 

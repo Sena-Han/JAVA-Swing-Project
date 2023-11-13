@@ -3,6 +3,7 @@ package inside;
 import javax.swing.ImageIcon;
 
 public class MapObject {
+	
     private ImageIcon backScreenImg;
     
     public MapObject() {

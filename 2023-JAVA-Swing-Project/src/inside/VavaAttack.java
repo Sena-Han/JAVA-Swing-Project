@@ -36,30 +36,30 @@ public class VavaAttack {
         attackballY = -1; 
     }
 
-public void updateGraphics() {
+    public void updateGraphics() {
     // 공격에 관련된 그래픽 업데이트 코드
-    if (isAttacking) {
-        attackballX += 5; // 5 픽셀씩 이동
+    	if (isAttacking) {
+    		attackballX += 5; // 5 픽셀씩 이동
+    	}
     }
-}
 
-public int getAttackballX() { 
-    return attackballX; 
-}
+    public int getAttackballX() { 
+    	return attackballX; 
+    }
 
-public int getAttackballY() { 
-    return attackballY; 
-}
+    public int getAttackballY() { 
+    	return attackballY; 
+    }
 
-public Image getAttackballImage() { 
-    return attackballImage; 
-}
+    public Image getAttackballImage() { 
+    	return attackballImage; 
+    }
 
-public int getAttackballWidth() { 
-    return attackballWidth; 
-}
+    public int getAttackballWidth() { 
+    	return attackballWidth; 
+    }
 
-public int getAttackballHeight() { 
-    return attackballHeight; 
-}
+    public int getAttackballHeight() { 
+    	return attackballHeight; 
+    }
 }

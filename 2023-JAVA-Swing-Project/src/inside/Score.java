@@ -3,6 +3,7 @@ package inside;
 import java.awt.Image;
 
 public class Score {
+	
 	private Image image; // 학점(스코어) 형상화 이미지
 
 	// 학점 이미지 크기 및 좌표
@@ -10,11 +11,12 @@ public class Score {
 	private int y;
 	private int width;
 	private int height;
-	// 젤리 먹으면 투명해지게 하도록 하는 투명도 조절 변수
-	private int alpha;
 	
 	// 스코어 점수
-	private int score;
+	private int sumScore;
+	
+	// 젤리 먹으면 투명해지게 하도록 하는 투명도 조절 변수
+	private int alpha;
 
 	public int getX() {
 		return x;

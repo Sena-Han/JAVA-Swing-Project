@@ -17,9 +17,12 @@ import main.ListenAdapter;
 
 
 public class Main extends ListenAdapter {
-	private JFrame frame; // 창을 띄우기 위한 프레임
-	private IntroPanel introPanel; // 인트로
+	
+	private JFrame frame;
+	
+	private IntroPanel introPanel; // 게임의 인트로
 	private StoryPanel storyPanel; //바바 스토리
+	
 	private CardLayout cardLayout;
 
 	
@@ -60,6 +63,7 @@ public class Main extends ListenAdapter {
 		frame.getContentPane().add(introPanel, "intro");
 		frame.getContentPane().add(storyPanel, "story");
 		}
+	
 	@Override
 	public void mousePressed(MouseEvent e) { // mouseClicked로 변경가능
 		if (e.getComponent().toString().contains("IntroPanel")) { // IntroPanel에서 마우스를 눌렀다면

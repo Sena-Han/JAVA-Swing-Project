@@ -11,6 +11,22 @@ import java.awt.event.MouseListener;
 public abstract class ListenAdapter implements KeyListener, MouseListener, ActionListener{
 
 	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+	}
+	
+	@Override
 	public void mouseClicked(MouseEvent e) {
 	}
 
@@ -28,21 +44,5 @@ public abstract class ListenAdapter implements KeyListener, MouseListener, Actio
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
 	}
 }

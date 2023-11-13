@@ -12,18 +12,19 @@ public class Vava {
 	private int width = 0;
 	private int height = 0;
 
-	// 바바 상태
 	private int hp = 1000; // 바바 체력
 	private int alpha = 255; // 바바 투명도
-
-	private int big = 0; // 거대화 남은 시간
-	private int fast = 0; // 가속화 남은 시간
-
+	
 	private int countJump = 0; // 점프 횟수
+	private int countAttack = 0; //공격 횟수
 
-	private boolean invincible = false; // 무적 여부
-	private boolean fall = false; // 낙하 여부
-	private boolean jump = false; // 점프 여부
+	private int fastTime = 10; // 부스터 지속 시간
+	private int bigTime = 10; // 거대화 지속 시간
+
+	private boolean jump = false; // 점프
+	private boolean fall = false; // 낙하
+	
+	private boolean invincible = false; // 무적
 
 	public Vava(Image image) {
 		this.setImage(image);
@@ -77,20 +78,20 @@ public class Vava {
 		this.alpha = alpha;
 	}
 
-	public int getBig() {
-		return big;
+	public int getBigTime() {
+		return bigTime;
 	}
 
-	public void setBig(int big) {
-		this.big = big;
+	public void setBigTime(int big) {
+		this.bigTime = big;
 	}
 
-	public int getFast() {
-		return fast;
+	public int getFastTime() {
+		return fastTime;
 	}
 
-	public void setFast(int fast) {
-		this.fast = fast;
+	public void setFastTime(int fast) {
+		this.fastTime = fast;
 	}
 
 	public int getCountJump() {
@@ -131,5 +132,13 @@ public class Vava {
 
 	public void setImage(Image image) {
 		this.image = image;
+	}
+
+	public int getCountAttack() {
+		return countAttack;
+	}
+
+	public void setCountAttack(int countAttack) {
+		this.countAttack = countAttack;
 	}
 }
