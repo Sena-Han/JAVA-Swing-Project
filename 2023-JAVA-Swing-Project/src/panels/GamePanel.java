@@ -1,8 +1,14 @@
 package panels;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.awt.Color;
 import java.awt.CardLayout;
 import java.awt.AlphaComposite;
@@ -10,29 +16,36 @@ import java.awt.AlphaComposite;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import inside.MapObject;
 import inside.Obstacle;
 import inside.Score;
 import inside.Screen;
 import inside.Vava;
 import inside.VavaAttack;
+import inside.VavaJump;
 
 import main.Main;
 
 
 public class GamePanel extends JPanel {
+	
+	// 더블 버퍼링 이미지
+	private Image bufferImage;
+	private Graphics bufferg;
+		
 	// vava
 	private ImageIcon vavaIc; // 기본 모션
-	private ImageIcon jumpIc; // 점프 모션
-	private ImageIcon doubleJumpIc; // 2단 점프 모션
-	private ImageIcon fallIc; // 2단 점프 후 낙하 모션
-	private ImageIcon attackIc; // 공격 모션
 	private ImageIcon hitIc; // 충돌 모션
+	private ImageIcon attackIc; // 공격 모션
+	//private ImageIcon jumpIc; // 점프 모션
+	//private ImageIcon doubleJumpIc; // 2단 점프 모션
+	private ImageIcon fallIc; // 2단 점프 후 낙하 모션
+	
+	private ImageIcon lifeBar; // hp 게이지
+	
+	// VavaAttack
+	private Image attackballImage; // 어택볼 이미지 추가
+	private VavaAttack vavaAttack; // vavaAttack 객체 선언
 	
 	// screen
 	private ImageIcon backScreenImg;
@@ -44,38 +57,29 @@ public class GamePanel extends JPanel {
 	private ImageIcon obstacle1; // 1단 장애물
 	private ImageIcon obstacle2; // 2단 장애물
 	private ImageIcon obstacleFly; // death 장애물
+	
+	// hit
+	private ImageIcon redScreenIc; // 충돌 시 레드스크린
 
 	// score
 	private ImageIcon scoreA = new ImageIcon(""); // A학점 이미지를 통해 A스코어 생성
 	private ImageIcon scoreB = new ImageIcon(""); // B학점 이미지를 통해 B스코어 생성
 	private ImageIcon scoreC = new ImageIcon(""); // C학점 이미지를 통해 C스코어 생성
 	
-	//VavaAttack
-	private Image attackballImage; // 어택볼 이미지 추가
-	private VavaAttack vavaAttack; // vavaAttack 객체 선언
-
-	
-	// life(Hp)
-	private ImageIcon lifeBar; // hp 게이지
-	
-	// hit
-	private ImageIcon redScreenIc; // 충돌 시 레드스크린
+	// score
+	private int sumScore = 0; // 결과점수 변수 (누적 score)
 
 	// list
 	private List<Obstacle> obstacleList; // 장애물 리스트
 	private List<Score> scoreList = new ArrayList<>(); // 스코어 리스트
 	
-	// 변수
-	private int sumScore = 0; // 결과점수 변수 (누적 score)
-	
 	private boolean fadeOn = false;
-	private boolean redScreen = false; // 충돌 시 레드스크린 여부
+	private boolean redScreen = false; // 충돌 시 레드스크린
 	
-	private AlphaComposite alphaComposite; // 투명도 관련
+	private AlphaComposite alphaComposite; // 투명도
 	
-	// 더블 버퍼링 이미지
-	private Image bufferImage;
-	private Graphics bufferg;
+	JFrame sFrame;
+	CardLayout cardLayout;
 
 	Vava v1; // 바바 객체
 	
@@ -86,20 +90,16 @@ public class GamePanel extends JPanel {
 	
 	Color screenFade;
 	
-	JFrame superFrame;
-	CardLayout cardLayout;
 	Main main;
 	
-	public GamePanel(JFrame superFrame, CardLayout cardLayout, Object o) {
-		this.superFrame = superFrame;
+	public GamePanel(JFrame sFrame, CardLayout cardLayout, Object o) {
+		this.sFrame = sFrame;
 		this.cardLayout = cardLayout;
 		this.main = (Main)o;
 		
-		 // vavaAttack 객체 초기화
+		// vavaAttack 객체 초기화
         vavaAttack = new VavaAttack();
 	}
-	
-	
 	
 	// 화면을 그림
 	@Override
@@ -112,6 +112,7 @@ public class GamePanel extends JPanel {
 		if (vavaAttack.isAttacking()) {
 		    bufferg.drawImage(vavaAttack.getAttackballImage(), vavaAttack.getAttackballX(), vavaAttack.getAttackballY(),
 		            vavaAttack.getAttackballWidth(), vavaAttack.getAttackballHeight(), null);
+		}
 		    
 		Graphics2D g2D = (Graphics2D) bufferg;
 		
@@ -240,4 +241,5 @@ public class GamePanel extends JPanel {
 			}
 		}).start();
 	}
+
 }
