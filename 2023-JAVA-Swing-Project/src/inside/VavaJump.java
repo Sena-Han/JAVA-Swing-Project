@@ -74,5 +74,6 @@ public class VavaJump implements KeyListener {
             vava.setCountJump(vava.getCountJump() + 1);
             isJumping = true;
         //점프 애니메이션 등을 처리
+    	}
     }
 }
