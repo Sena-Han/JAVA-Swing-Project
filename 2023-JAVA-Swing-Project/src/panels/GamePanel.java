@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.Color;
 import java.awt.CardLayout;
@@ -16,6 +18,9 @@ import java.awt.AlphaComposite;
 import java.util.ArrayList;
 import java.util.List;
 
+import inside.Item;
+import inside.GiantItem;
+import inside.BoosterItem;
 import inside.MapObject;
 import inside.Obstacle;
 import inside.Score;
@@ -25,7 +30,6 @@ import inside.VavaAttack;
 import inside.VavaJump;
 
 import main.Main;
-
 
 public class GamePanel extends JPanel {
 	
@@ -69,6 +73,10 @@ public class GamePanel extends JPanel {
 	// score
 	private int sumScore = 0; // 결과점수 변수 (누적 score)
 
+	// Item
+	private JButton useGiantItemButton;
+	private JButton useBoosterItemButton;
+	
 	// list
 	private List<Obstacle> obstacleList; // 장애물 리스트
 	private List<Score> scoreList = new ArrayList<>(); // 스코어 리스트
@@ -99,6 +107,29 @@ public class GamePanel extends JPanel {
 		
 		// vavaAttack 객체 초기화
         vavaAttack = new VavaAttack();
+        
+        // 아이템 버튼 초기화
+        useGiantItemButton = new JButton("거대화 아이템 사용");
+        useGiantItemButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Item giantItem = new GiantItem("거대화 아이템");
+                giantItem.use(v1); // vava에게 아이템 사용
+            }
+        });
+        useGiantItemButton.setBounds(10, 10, 150, 30); // 버튼 위치 설정
+        add(useGiantItemButton);
+
+        useBoosterItemButton = new JButton("부스터 아이템 사용");
+        useBoosterItemButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Item boosterItem = new BoosterItem("부스터 아이템");
+                boosterItem.use(v1); // vava에게 아이템 사용
+            }
+        });
+        useBoosterItemButton.setBounds(170, 10, 150, 30); // 버튼 위치 설정
+        add(useBoosterItemButton);
 	}
 	
 	// 화면을 그림
