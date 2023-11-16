@@ -45,11 +45,14 @@ public class GamePanel extends JPanel {
 	//private ImageIcon doubleJumpIc; // 2단 점프 모션
 	private ImageIcon fallIc; // 2단 점프 후 낙하 모션
 	
-	private ImageIcon lifeBar; // hp 게이지
-	
-	// VavaAttack
+	// vava attack
 	private Image attackballImage; // 어택볼 이미지 추가
 	private VavaAttack vavaAttack; // vavaAttack 객체 선언
+	
+	// hp
+	private ImageIcon hpBar; // hp 게이지
+	private ImageIcon hpCoffee; // hp 회복 아이템. 회복 낮음.
+	private ImageIcon hpEDrink; // hp 회복 아이템. 회복 높음.
 	
 	// screen
 	private ImageIcon backScreenImg;
@@ -60,7 +63,7 @@ public class GamePanel extends JPanel {
 	// obstacle
 	private ImageIcon obstacle1; // 1단 장애물
 	private ImageIcon obstacle2; // 2단 장애물
-	private ImageIcon obstacleFly; // death 장애물
+	private ImageIcon obstacleDeath; // death 장애물
 	
 	// hit
 	private ImageIcon redScreenIc; // 충돌 시 레드스크린
@@ -84,7 +87,7 @@ public class GamePanel extends JPanel {
 	private boolean fadeOn = false;
 	private boolean redScreen = false; // 충돌 시 레드스크린
 	
-	private AlphaComposite alphaComposite; // 투명도
+	private AlphaComposite alpha; // 투명도
 	
 	JFrame sFrame;
 	CardLayout cardLayout;
@@ -110,6 +113,7 @@ public class GamePanel extends JPanel {
         
         // 아이템 버튼 초기화
         useGiantItemButton = new JButton("거대화 아이템 사용");
+        
         useGiantItemButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -117,10 +121,12 @@ public class GamePanel extends JPanel {
                 giantItem.use(v1); // vava에게 아이템 사용
             }
         });
+        
         useGiantItemButton.setBounds(10, 10, 150, 30); // 버튼 위치 설정
         add(useGiantItemButton);
 
         useBoosterItemButton = new JButton("부스터 아이템 사용");
+        
         useBoosterItemButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -128,19 +134,21 @@ public class GamePanel extends JPanel {
                 boosterItem.use(v1); // vava에게 아이템 사용
             }
         });
+        
         useBoosterItemButton.setBounds(170, 10, 150, 30); // 버튼 위치 설정
         add(useBoosterItemButton);
 	}
 	
-	// 화면을 그림
+	// 스윙 컴포넌트가 자신의 모양을 그리는 메서드
 	@Override
 	protected void paintComponent(Graphics g) {
 		
-		// Vava 이미지 그리기
+		// Vava 이미지
 		bufferg.drawImage(v1.getImage(), v1.getX(), v1.getY(), v1.getWidth(), v1.getHeight(), null);
 
-		// 어택볼 그리기
-		if (vavaAttack.isAttacking()) {
+		// 어택볼
+		if (vavaAttack.isAttacking()) 
+		{
 		    bufferg.drawImage(vavaAttack.getAttackballImage(), vavaAttack.getAttackballX(), vavaAttack.getAttackballY(),
 		            vavaAttack.getAttackballWidth(), vavaAttack.getAttackballHeight(), null);
 		}
@@ -148,58 +156,59 @@ public class GamePanel extends JPanel {
 		Graphics2D g2D = (Graphics2D) bufferg;
 		
 		// 더블 버퍼
-		if (bufferg == null) {
+		if (bufferg == null) 
+		{
 			bufferImage = createImage(this.getWidth(), this.getHeight());
 			
-			if (bufferImage == null) 
-				System.out.println("스크린 생성 실패");
-			else 
+			if (bufferImage != null) 
 				bufferg = bufferImage.getGraphics();
+			else 
+				System.out.println("실패");
 		}
 		
 		super.paintComponent(bufferg);
 
-		// 장애물을 그림
-		for (int i = 0; i < obstacleList.size(); i++) {
+		// 장애물
+		for (int i = 0; i < obstacleList.size(); i++) 
+		{
+			Obstacle tmpObstacle = obstacleList.get(i);
 
-			Obstacle tempObstacle = obstacleList.get(i);
-
-			if (tempObstacle.getX() > 0 && tempObstacle.getX() < 100) { // 나중에 좌표 수정해야함
-				
-				bufferg.drawImage(tempObstacle.getImage(), tempObstacle.getX(), tempObstacle.getY(), tempObstacle.getWidth(),
-						tempObstacle.getHeight(), null);
+			if (tmpObstacle.getX() > 0 && tmpObstacle.getX() < 100) // 나중에 좌표 수정해야함
+			{
+				bufferg.drawImage(tmpObstacle.getImage(), tmpObstacle.getX(), tmpObstacle.getY(), tmpObstacle.getWidth(),
+						tmpObstacle.getHeight(), null);
 			}
 		}
 		
 		// 충돌 시 레드스크린
-		if (redScreen) {
-
-			alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 125 / 255);
-			g2D.setComposite(alphaComposite);
+		if (redScreen) 
+		{
+			alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 125 / 255);
+			g2D.setComposite(alpha);
 
 			bufferg.drawImage(redScreenIc.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
 
-			alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 255 / 255);
-			g2D.setComposite(alphaComposite);
+			alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 255 / 255);
+			g2D.setComposite(alpha);
 		}
 		
-		// score(학점)를 그림
-		for (int i = 0; i < scoreList.size(); i++) {
+		// score(학점)
+		for (int i = 0; i < scoreList.size(); i++) 
+		{
+			Score tmpScore = scoreList.get(i);
 
-			Score tempScore = scoreList.get(i);
+			if (tmpScore.getX() > -90 && tmpScore.getX() < 810) 
+			{
 
-			if (tempScore.getX() > -90 && tempScore.getX() < 810) {
+				alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+						(float) tmpScore.getAlpha() / 255);
+				g2D.setComposite(alpha); // 투명화
 
-				alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
-						(float) tempScore.getAlpha() / 255);
-				g2D.setComposite(alphaComposite); // 투명화
+				bufferg.drawImage(tmpScore.getImage(), tmpScore.getX(), tmpScore.getY(), tmpScore.getWidth(),
+						tmpScore.getHeight(), null);
 
-				bufferg.drawImage(tempScore.getImage(), tempScore.getX(), tempScore.getY(), tempScore.getWidth(),
-						tempScore.getHeight(), null);
-
-				// alpha값을 되돌림
-				alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 255 / 255);
-				g2D.setComposite(alphaComposite);
+				alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 255 / 255);
+				g2D.setComposite(alpha);
 			}
 		}
 		
@@ -208,69 +217,79 @@ public class GamePanel extends JPanel {
 		bufferg.drawImage(back21.getImage(), back21.getX(), 0, back21.getWidth(), back21.getHeight(), null);
 		bufferg.drawImage(back22.getImage(), back22.getX(), 0, back22.getWidth(), back22.getHeight(), null);
 		
-		if (fadeOn) {
+		if (fadeOn) 
+		{
 			bufferg.setColor(screenFade);
 			bufferg.fillRect(0, 0, this.getWidth(), this.getHeight());
 		}
 
-		// 버퍼 이미지를 화면에 출력
-		g.drawImage(bufferImage, 0, 0, this);
+		g.drawImage(bufferImage, 0, 0, this); // 화면에 그림
 	}
 	
-	// 장애물 충돌
-	private void hit() {
-		new Thread(new Runnable() {
-
+	// 장애물 충돌 (death 장애물 x)
+	private void hitObstacle() {
+		new Thread(new Runnable() 
+		{
 			@Override
-			public void run() {
-
-				v1.setInvincible(true); // 충돌했으므로 vava를 무적 상태로 변환함.
-
-				System.out.println("vava 무적 상태");
+			public void run() 
+			{
+				v1.setHp(v1.getHp() - 50); // 충돌로 인해 vava 체력 감소. 수치는 나중에 수정.
 
 				redScreen = true; // 충돌되어 레드스크린 on
+				v1.setInvincible(true); // 충돌했으므로 vava를 일시적으로 무적 상태로 변환함.
 
-				v1.setHp(v1.getHp() - 50); // 충돌하여 vava 체력 감소. 수치는 나중에 수정.
 				v1.setImage(hitIc.getImage()); // vava 충돌 모션으로 변경.
 				v1.setAlpha(60); // vava 투명도 변경. 수치는 나중에 수정.
 
-				try {
-					Thread.sleep(250); // 0.5초 대기시킴. 수치는 나중에 수정.
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
-				redScreen = false; // 레드스크린 off
-
-				try {
-					Thread.sleep(250);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
-				if (v1.getImage() == hitIc.getImage()) // 0.5초 동안 이미지가 바뀌지 않았다면 기본이미지로 변경
-					v1.setImage(vavaIc.getImage());
-
-				for (int j = 0; j < 11; j++) { // 충돌하여 무적 상태임을 보여주기 위해 2.5초간 vava가 깜빡거림.
-
-					if (v1.getAlpha() == 60) // 수치는 나중에 수정
-						v1.setAlpha(160);
-					else
-						v1.setAlpha(60);
-					
-					try {
-						Thread.sleep(250);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-
-				v1.setAlpha(255); // vava 투명도 원상 복귀.
-
+				hitRedScreen();
+				hitChangeIc();
+				hitBlinkEffect();
+				
 				v1.setInvincible(false); // vava 무적 상태 off
-				System.out.println("vava 무적 상태 종료");
 			}
 		}).start();
+	}
+	
+	private void hitRedScreen() {
+		
+		try {
+			Thread.sleep(500); // 0.5초 대기시킴. 수치는 나중에 수정.
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		redScreen = false; // 레드스크린 off
+	}
+	
+	private void hitChangeIc() {
+		
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		if (v1.getImage() == hitIc.getImage()) // 바바 모션을 기본으로 변경
+			v1.setImage(vavaIc.getImage());
+	}
+	
+	private void hitBlinkEffect() {
+		
+		for (int j = 0; j < 10; j++) { // 충돌하여 무적 상태임을 보여주기 위해 vava가 10번 깜빡거림.
+
+			if (v1.getAlpha() == 60) // 수치는 나중에 수정
+				v1.setAlpha(160);
+			else
+				v1.setAlpha(60);
+			
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+		v1.setAlpha(255); // vava 투명도 원상 복귀.
 	}
 
 }
