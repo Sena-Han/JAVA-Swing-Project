@@ -85,7 +85,8 @@ public class GamePanel extends JPanel {
 	private List<Score> scoreList = new ArrayList<>(); // 스코어 리스트
 	
 	private boolean fadeOn = false;
-	private boolean redScreen = false; // 충돌 시 레드스크린
+	private boolean redScreenOn = false; // 충돌 시 레드스크린
+	private boolean escKeyOn = false; // esc키를 누르면 일시정지
 	
 	private AlphaComposite alpha; // 투명도
 	
@@ -181,7 +182,7 @@ public class GamePanel extends JPanel {
 		}
 		
 		// 충돌 시 레드스크린
-		if (redScreen) 
+		if (redScreenOn) 
 		{
 			alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 125 / 255);
 			g2D.setComposite(alpha);
@@ -190,6 +191,13 @@ public class GamePanel extends JPanel {
 
 			alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 255 / 255);
 			g2D.setComposite(alpha);
+		}
+		
+		// esc 키를 눌렀을 시 화면이 어두워짐
+		if (escKeyOn)
+		{
+			alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 100 / 255);
+			g2D.setComposite(alpha); // 코드 추가해야함
 		}
 		
 		// score(학점)
@@ -235,7 +243,7 @@ public class GamePanel extends JPanel {
 			{
 				v1.setHp(v1.getHp() - 50); // 충돌로 인해 vava 체력 감소. 수치는 나중에 수정.
 
-				redScreen = true; // 충돌되어 레드스크린 on
+				redScreenOn = true; // 충돌되어 레드스크린 on
 				v1.setInvincible(true); // 충돌했으므로 vava를 일시적으로 무적 상태로 변환함.
 
 				v1.setImage(hitIc.getImage()); // vava 충돌 모션으로 변경.
@@ -258,7 +266,7 @@ public class GamePanel extends JPanel {
 			e.printStackTrace();
 		}
 
-		redScreen = false; // 레드스크린 off
+		redScreenOn = false; // 레드스크린 off
 	}
 	
 	private void hitChangeIc() {
