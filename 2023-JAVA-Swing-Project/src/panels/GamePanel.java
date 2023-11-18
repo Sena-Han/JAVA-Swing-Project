@@ -21,12 +21,13 @@ import java.util.List;
 import inside.Item;
 import inside.GiantItem;
 import inside.BoosterItem;
-import inside.MapObject;
+import inside.GameObjectImg;
 import inside.Obstacle;
 import inside.Score;
 import inside.Screen;
 import inside.Vava;
 import inside.VavaAttack;
+import inside.VavaImg;
 import inside.VavaJump;
 
 import main.Main;
@@ -38,12 +39,12 @@ public class GamePanel extends JPanel {
 	private Graphics bufferg;
 		
 	// vava
-	private ImageIcon vavaIc; // 기본 모션
-	private ImageIcon hitIc; // 충돌 모션
-	private ImageIcon attackIc; // 공격 모션
-	//private ImageIcon jumpIc; // 점프 모션
-	//private ImageIcon doubleJumpIc; // 2단 점프 모션
-	private ImageIcon fallIc; // 2단 점프 후 낙하 모션
+	private ImageIcon vavaIc; // 기본
+	private ImageIcon hitIc; // 충돌
+	private ImageIcon attackIc; // 공격
+	//private ImageIcon jumpIc; // 점프
+	//private ImageIcon doubleJumpIc; // 2단 점프
+	private ImageIcon fallIc; // 2단 점프 후 낙하
 	
 	// vava attack
 	private Image attackballImage; // 어택볼 이미지 추가
@@ -69,9 +70,9 @@ public class GamePanel extends JPanel {
 	private ImageIcon redScreenIc; // 충돌 시 레드스크린
 
 	// score
-	private ImageIcon scoreA = new ImageIcon(""); // A학점 이미지를 통해 A스코어 생성
-	private ImageIcon scoreB = new ImageIcon(""); // B학점 이미지를 통해 B스코어 생성
-	private ImageIcon scoreC = new ImageIcon(""); // C학점 이미지를 통해 C스코어 생성
+	private ImageIcon scoreA; // A학점 이미지
+	private ImageIcon scoreB; // B학점 이미지
+	private ImageIcon scoreC; // C학점 이미지
 	
 	// score
 	private int sumScore = 0; // 결과점수 변수 (누적 score)
@@ -82,7 +83,7 @@ public class GamePanel extends JPanel {
 	
 	// list
 	private List<Obstacle> obstacleList; // 장애물 리스트
-	private List<Score> scoreList = new ArrayList<>(); // 스코어 리스트
+	private List<Score> scoreList; // 스코어 리스트
 	
 	private boolean fadeOn = false;
 	private boolean redScreenOn = false; // 충돌 시 레드스크린
@@ -94,6 +95,8 @@ public class GamePanel extends JPanel {
 	CardLayout cardLayout;
 
 	Vava v1; // 바바 객체
+	
+	GameObjectImg gameObje1; // 맵 수만큼 더 늘어남.
 	
 	Screen back11;
 	Screen back12;
@@ -193,11 +196,23 @@ public class GamePanel extends JPanel {
 			g2D.setComposite(alpha);
 		}
 		
-		// esc 키를 눌렀을 시 화면이 어두워짐
+		// esc 키를 눌렀을 시 화면이 잠시 어두워짐
 		if (escKeyOn)
 		{
 			alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 100 / 255);
-			g2D.setComposite(alpha); // 코드 추가해야함
+			g2D.setComposite(alpha);
+			
+			bufferg.setColor(Color.BLACK); // fillRect를 호출하기 전에 색상을 지정해줌.
+			bufferg.fillRect(0, 0, 850, 550); // 사각형 채우기 (크기는 나중에 수정)
+			
+			try {
+				Thread.sleep(500); // 0.5초 대기시킴. 수치는 나중에 수정.
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 255 / 255);
+			g2D.setComposite(alpha);
 		}
 		
 		// score(학점)
@@ -208,12 +223,10 @@ public class GamePanel extends JPanel {
 			if (tmpScore.getX() > -90 && tmpScore.getX() < 810) 
 			{
 
-				alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
-						(float) tmpScore.getAlpha() / 255);
-				g2D.setComposite(alpha); // 투명화
+				alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) tmpScore.getAlpha() / 255);
+				g2D.setComposite(alpha);
 
-				bufferg.drawImage(tmpScore.getImage(), tmpScore.getX(), tmpScore.getY(), tmpScore.getWidth(),
-						tmpScore.getHeight(), null);
+				bufferg.drawImage(tmpScore.getImage(), tmpScore.getX(), tmpScore.getY(), tmpScore.getWidth(), tmpScore.getHeight(), null);
 
 				alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 255 / 255);
 				g2D.setComposite(alpha);
@@ -234,8 +247,32 @@ public class GamePanel extends JPanel {
 		g.drawImage(bufferImage, 0, 0, this); // 화면에 그림
 	}
 	
+	// vava 이미지 설정
+	private void vavaImgSet(VavaImg vobje)
+	{
+		vavaIc = vobje.getVavaIc();  // 기본
+		hitIc = vobje.getHitIc(); // 충돌
+		attackIc = vobje.getAttackIc(); // 공격
+		//jumpIc = vobje.getJumpIc(); // 점프
+		//doubleJumpIc = vobje.getDoubleJumpIc(); // 2단 점프
+		fallIc = vobje.getFallIc(); // 2단 점프 후 낙하
+	}
+	
+	// 게임 속 오브젝트들의 이미지를 맵마다 다르게 저장해 둠.
+	private void gameObjectStore()
+	{
+		// gameObje1 = new GameObject(new ImageIcon("")); 형식으로 넣으면 됨.
+	}
+	
+	// 장애물, 학점 등 이미지 설정
+	private void gameObjectImgSet(GameObjectImg gobje)
+	{
+		// obstacle1 = gobje.getObstacle1(); 형식으로 넣으면 됨.
+	}
+	
 	// 장애물 충돌 (death 장애물 x)
-	private void hitObstacle() {
+	private void hitObstacle() 
+	{
 		new Thread(new Runnable() 
 		{
 			@Override
@@ -258,7 +295,8 @@ public class GamePanel extends JPanel {
 		}).start();
 	}
 	
-	private void hitRedScreen() {
+	private void hitRedScreen() 
+	{
 		
 		try {
 			Thread.sleep(500); // 0.5초 대기시킴. 수치는 나중에 수정.
@@ -269,7 +307,8 @@ public class GamePanel extends JPanel {
 		redScreenOn = false; // 레드스크린 off
 	}
 	
-	private void hitChangeIc() {
+	private void hitChangeIc() 
+	{
 		
 		try {
 			Thread.sleep(500);
@@ -281,9 +320,11 @@ public class GamePanel extends JPanel {
 			v1.setImage(vavaIc.getImage());
 	}
 	
-	private void hitBlinkEffect() {
+	private void hitBlinkEffect() 
+	{
 		
-		for (int j = 0; j < 10; j++) { // 충돌하여 무적 상태임을 보여주기 위해 vava가 10번 깜빡거림.
+		for (int j = 0; j < 10; j++) // 충돌하여 무적 상태임을 보여주기 위해 vava가 10번 깜빡거림.
+		{
 
 			if (v1.getAlpha() == 60) // 수치는 나중에 수정
 				v1.setAlpha(160);
@@ -300,4 +341,10 @@ public class GamePanel extends JPanel {
 		v1.setAlpha(255); // vava 투명도 원상 복귀.
 	}
 
+	
+	// 맵 설정을 변경함. 배경 변경, 체력 조정, 장애물 충돌 등등
+	private void gamePlayMapSet()
+	{
+		// 내용 추가 예정
+	}
 }
