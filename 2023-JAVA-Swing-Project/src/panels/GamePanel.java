@@ -1,7 +1,6 @@
 package panels;
 
 import javax.swing.ImageIcon;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,6 +14,11 @@ import java.awt.event.KeyEvent;
 import java.awt.Color;
 import java.awt.CardLayout;
 import java.awt.AlphaComposite;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+import java.awt.image.PixelGrabber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,19 +91,28 @@ public class GamePanel extends JPanel {
 	private List<Obstacle> obstacleList; // 장애물 리스트
 	private List<Score> scoreList; // 스코어 리스트
 	private List<Platform> platforms; // 발판 리스트
+	private List<Integer> mapLthList; // 맵의 시작하는 부분 체크
 	
+	// map
+	private int[] mapSArr;  // 맵 사이즈를 저장할 배열
+    private int[][] mapCArr; // 맵 픽셀값을 저장할 배열
+    private int mapL;    // 맵의 길이
+    
 	private boolean fadeOn = false;
 	private boolean redScreenOn = false; // 충돌 시 레드스크린
 	private boolean escKeyOn = false; // esc키를 누르면 일시정지
 	
 	private AlphaComposite alpha; // 투명도
 	
-	JFrame sFrame;
-	CardLayout cardLayout;
-
 	Vava v1; // 바바 객체
 	
+	JFrame sFrame;
+	CardLayout cardLayout;
+	
 	GameObjectImg gameObje1; // 맵 수만큼 더 늘어남.
+	GameObjectImg gameObje2;
+	GameObjectImg gameObje3;
+	GameObjectImg gameObje4;
 	
 	Screen back11;
 	Screen back12;
@@ -113,7 +126,14 @@ public class GamePanel extends JPanel {
 	public GamePanel(JFrame sFrame, CardLayout cardLayout, Object o) {
 		this.sFrame = sFrame;
 		this.cardLayout = cardLayout;
-		this.main = (Main)o;
+		
+		if (o instanceof Main) {
+            this.main = (Main) o;
+        } else {
+            // 예외 처리 또는 기본값 설정
+            System.out.println("올바른 타입이 아닙니다.");
+            this.main = null; // 또는 다른 기본값 설정
+        }	
 		
 		// vavaAttack 객체 초기화
         vavaAttack = new VavaAttack();
@@ -180,7 +200,6 @@ public class GamePanel extends JPanel {
 		    g.drawImage(platform.getImage(), platform.getX(), platform.getY(), this);
 		}
 
-		
 		super.paintComponent(bufferg);
 
 		// 장애물
@@ -272,13 +291,25 @@ public class GamePanel extends JPanel {
 	// 게임 속 오브젝트들의 이미지를 맵마다 다르게 저장해 둠.
 	private void gameObjectStore()
 	{
-		// gameObje1 = new GameObject(new ImageIcon("")); 형식으로 넣으면 됨.
+		gameObje1 = new GameObjectImg(new ImageIcon("img/GameObject/Screen/screen01.png"));
+		gameObje2 = new GameObjectImg(new ImageIcon("img/GameObject/Screen/screen02.png"));
+		gameObje3 = new GameObjectImg(new ImageIcon("img/GameObject/Screen/screen03.png"));
+		gameObje4 = new GameObjectImg(new ImageIcon("img/GameObject/Screen/screen04.png"));
 	}
 	
 	// 장애물, 학점 등 이미지 설정
 	private void gameObjectImgSet(GameObjectImg gobje)
 	{
-		// obstacle1 = gobje.getObstacle1(); 형식으로 넣으면 됨.
+		hpCoffee = gobje.getHpCoffee();
+		hpEDrink = gobje.getHpEDrink();
+		
+		obstacle1 = gobje.getObstacle1();
+		obstacle2 = gobje.getObstacle2();
+		obstacleDeath = gobje.getObstacleDeath();
+		
+		scoreA = gobje.getScoreA();
+		scoreB = gobje.getScoreB();
+		scoreC = gobje.getScoreC();
 	}
 	
 	// 장애물 충돌 (death 장애물 x)
@@ -352,24 +383,132 @@ public class GamePanel extends JPanel {
 		v1.setAlpha(255); // vava 투명도 원상 복귀.
 	}
 	
-	
-	   public void update() {
-	        // 발판 이동 로직
-	        movePlatforms();
-	        // 그 외 게임 업데이트 로직
-	    }
+	public void update() 
+	{
+		// 발판 이동 로직
+		movePlatforms();
+		// 그 외 게임 업데이트 로직
+	}
 	
 	// 발판을 이동시킴
-    private void movePlatforms() {
+    private void movePlatforms() 
+    {
         int platformSpeed = 5; // 발판 이동 속도
 
         for (Platform platform : platforms) {
             platform.move(platformSpeed);
         }
     }
+    
+	// 이미지의 크기를 가져오는 메서드
+	private int[] getSize(String src) throws Exception {
+		// 파일 경로로부터 이미지 파일을 읽어옴
+		File imgf = new File(src);
+		BufferedImage img = ImageIO.read(imgf);
+		    
+		// 이미지의 너비와 높이를 가져와 배열에 저장
+		int width = img.getWidth();
+		int height = img.getHeight();
+		int[] tempSize = { width, height };
+		    
+		// 이미지의 너비와 높이를 포함한 배열 반환
+		return tempSize;
+	}
+		
+	// 이미지의 픽셀값을 가져오는 메서드
+	private int[][] getPic(String src) throws Exception {
+		// 파일 경로로부터 이미지 파일을 읽어옴
+		File imgf = new File(src);
+		BufferedImage img = ImageIO.read(imgf);
+		    
+		// 이미지의 너비와 높이를 가져옴
+		int width = img.getWidth();
+		int height = img.getHeight();
+		    
+		// 이미지의 픽셀값을 저장할 배열 초기화
+		int[] pixels = new int[width * height];
+		    
+		// PixelGrabber를 사용하여 이미지의 픽셀값을 가져옴
+		PixelGrabber grab = new PixelGrabber(img, 0, 0, width, height, pixels, 0, width);
+		grab.grabPixels();
+		    
+		// 가져온 픽셀값을 2차원 배열로 변환하여 저장
+		int[][] picture = new int[width][height];
+		
+		for (int i = 0; i < pixels.length; i++) {
+			// RGB값을 포함한 픽셀값을 배열에 저장
+		    picture[i % width][i / width] = pixels[i] + 16777216;
+		}
+		    
+		// 이미지의 픽셀값을 포함한 2차원 배열 반환
+		return picture;
+	}
+	
+    // 맵 초기화 initMap()와 동일.
+  	private void gameMapSet(int n, int l) 
+  	{
+  		String tmpM = null;
+
+  		if (n == 1) {
+  			tmpM = "img/map/map1.png";
+  		} else if (n == 2) {
+  			tmpM = "img/map/map2.png";
+        } else if (n == 3) {
+            tmpM = "img/map/map3.png";
+        } else if (n == 4) {
+            tmpM = "img/map/map4.png";
+        }
+          
+        try {
+        	mapSArr = getSize(tmpM);
+            mapCArr = getPic(tmpM);
+            
+            int tmpML = mapSArr[0];
+            this.mapL += tmpML; // mapLength 갱신
+            
+        } catch (Exception e1) {
+        	e1.printStackTrace();
+        }
+          
+        int maxX, maxY;
+        maxX = mapSArr[0]; // 넓이
+        maxY = mapSArr[1]; // 높이
+  	}
+  	
+  	//게임 오브젝트 초기화 initObject()와 동일.
+  	private void gameObjeSet() 
+  	{
+  		mapLthList = new ArrayList<>(); // 맵 시작하는 부분 체크
+
+  		gameObjectStore();
+  		
+  		gameMapSet(1, mapL);
+  		mapLthList.add(mapL);
+
+  		gameMapSet(2, mapL);
+  		mapLthList.add(mapL);
+
+  		gameMapSet(3, mapL);
+  		mapLthList.add(mapL);
+
+  		gameMapSet(4, mapL);
+  		mapLthList.add(mapL);
+
+  		backScreenImg = gameObje1.getbackScreenImg();
+  		backScreenImg = gameObje2.getbackScreenImg();
+  		backScreenImg = gameObje3.getbackScreenImg();
+  		backScreenImg = gameObje4.getbackScreenImg();
+  		
+  		back11 = new Screen(backScreenImg.getImage(), 0, 0, backScreenImg.getImage().getWidth(null), backScreenImg.getImage().getHeight(null));
+  		back12 = new Screen(backScreenImg.getImage(), backScreenImg.getImage().getWidth(null), 0, backScreenImg.getImage().getWidth(null), backScreenImg.getImage().getHeight(null));
+  		back21 = new Screen(backScreenImg.getImage(), 0, 0, backScreenImg.getImage().getWidth(null), backScreenImg.getImage().getHeight(null));
+  		back22 = new Screen(backScreenImg.getImage(), backScreenImg.getImage().getWidth(null), 0, backScreenImg.getImage().getWidth(null), backScreenImg.getImage().getHeight(null));
+  		
+  		screenFade = new Color(0, 0, 0, 0);
+  	}
 	
 	// 맵 설정을 변경함. 배경 변경, 체력 조정, 장애물 충돌 등등
-	private void gamePlayMapSet()
+	private void gamePlayMapSet() // mapMove()와 동일.
 	{
 		// 내용 추가 예정
 	}

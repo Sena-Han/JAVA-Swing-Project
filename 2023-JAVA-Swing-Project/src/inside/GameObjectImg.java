@@ -27,6 +27,11 @@ public class GameObjectImg {
     	// 기본 생성
     }
     
+    public GameObjectImg(ImageIcon backScreenImg) {
+        // 이미지를 직접 전달받는 생성자
+        this.backScreenImg = backScreenImg;
+    }
+    
     public ImageIcon getbackScreenImg() {
         return backScreenImg;
     }
