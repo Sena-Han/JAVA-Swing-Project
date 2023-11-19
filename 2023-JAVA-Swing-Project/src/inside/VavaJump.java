@@ -39,7 +39,7 @@ public class VavaJump implements KeyListener {
         if (keyCode == KeyEvent.VK_UP) {
             if (!isJumping) {
                 // 1단 점프
-                jump();
+            	jump();
                 System.out.println("1단 점프");
             } else if (canDoubleJump) {
                 // 2단 점프
@@ -65,15 +65,17 @@ public class VavaJump implements KeyListener {
             if (vava.getCountJump() == 0) {
                 // 1단 점프
                 vava.setImage(jumpIc.getImage()); // 점프 이미지로 변경
+                vava.setY(vava.getY() - 50); // 1단 점프 높이 조절, 나중에 다시보기
             } else if (vava.getCountJump() == 1) {
                 // 2단 점프
                 vava.setImage(doubleJumpIc.getImage()); // 2단 점프 이미지로 변경
+                vava.setY(vava.getY() - 50); // 2단 점프 높이 조절, 나중에 다시보기
+                setCanDoubleJump(false); // 2단 점프 후에는 추가 점프 불가능
             }
 
             vava.setJump(true);
             vava.setCountJump(vava.getCountJump() + 1);
             isJumping = true;
-        //점프 애니메이션 등을 처리
     	}
     }
 }

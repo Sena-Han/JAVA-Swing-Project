@@ -1,6 +1,7 @@
 package panels;
 
 import javax.swing.ImageIcon;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,6 +24,7 @@ import inside.GiantItem;
 import inside.BoosterItem;
 import inside.GameObjectImg;
 import inside.Obstacle;
+import inside.Platform;
 import inside.Score;
 import inside.Screen;
 import inside.Vava;
@@ -84,6 +86,7 @@ public class GamePanel extends JPanel {
 	// list
 	private List<Obstacle> obstacleList; // 장애물 리스트
 	private List<Score> scoreList; // 스코어 리스트
+	private List<Platform> platforms; // 발판 리스트
 	
 	private boolean fadeOn = false;
 	private boolean redScreenOn = false; // 충돌 시 레드스크린
@@ -169,6 +172,14 @@ public class GamePanel extends JPanel {
 			else 
 				System.out.println("실패");
 		}
+		
+		super.paintComponent(g);
+
+		// 발판
+		for (Platform platform : platforms) {
+		    g.drawImage(platform.getImage(), platform.getX(), platform.getY(), this);
+		}
+
 		
 		super.paintComponent(bufferg);
 
@@ -340,7 +351,22 @@ public class GamePanel extends JPanel {
 
 		v1.setAlpha(255); // vava 투명도 원상 복귀.
 	}
+	
+	
+	   public void update() {
+	        // 발판 이동 로직
+	        movePlatforms();
+	        // 그 외 게임 업데이트 로직
+	    }
+	
+	// 발판을 이동시킴
+    private void movePlatforms() {
+        int platformSpeed = 5; // 발판 이동 속도
 
+        for (Platform platform : platforms) {
+            platform.move(platformSpeed);
+        }
+    }
 	
 	// 맵 설정을 변경함. 배경 변경, 체력 조정, 장애물 충돌 등등
 	private void gamePlayMapSet()

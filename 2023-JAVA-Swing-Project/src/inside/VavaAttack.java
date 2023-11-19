@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 public class VavaAttack {
+	private static final int ATTACKBALL_SPEED = 5;
     private boolean isAttacking = false;
     private int attackballX; 
     private int attackballY; 
@@ -39,7 +40,7 @@ public class VavaAttack {
     public void updateGraphics() {
     // 공격에 관련된 그래픽 업데이트 코드
     	if (isAttacking) {
-    		attackballX += 5; // 5 픽셀씩 이동
+    		attackballX += ATTACKBALL_SPEED; // 5 픽셀씩 이동(상수 위에 선언)
     	}
     }
 
