@@ -104,7 +104,7 @@ public class GamePanel extends JPanel {
 	
 	private AlphaComposite alpha; // 투명도
 	
-	Vava v1; // 바바 객체
+	Vava vava; // 바바 객체
 	
 	JFrame sFrame;
 	CardLayout cardLayout;
@@ -145,7 +145,7 @@ public class GamePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Item giantItem = new GiantItem("거대화 아이템");
-                giantItem.use(v1); // vava에게 아이템 사용
+                giantItem.use(vava); // vava에게 아이템 사용
             }
         });
         
@@ -158,7 +158,7 @@ public class GamePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Item boosterItem = new BoosterItem("부스터 아이템");
-                boosterItem.use(v1); // vava에게 아이템 사용
+                boosterItem.use(vava); // vava에게 아이템 사용
             }
         });
         
@@ -166,12 +166,47 @@ public class GamePanel extends JPanel {
         add(useBoosterItemButton);
 	}
 	
+	// vava 이미지 설정
+	private void vavaImgSet(VavaImg vobje)
+	{
+		vavaIc = vobje.getVavaIc();  // 기본
+		hitIc = vobje.getHitIc(); // 충돌
+		attackIc = vobje.getAttackIc(); // 공격
+		//jumpIc = vobje.getJumpIc(); // 점프
+		//doubleJumpIc = vobje.getDoubleJumpIc(); // 2단 점프
+		fallIc = vobje.getFallIc(); // 2단 점프 후 낙하
+	}
+	
+	// 게임 속 오브젝트들의 이미지를 맵마다 다르게 저장해 둠.
+	private void gameObjectStore()
+	{
+		gameObje1 = new GameObjectImg(new ImageIcon("img/GameObject/Screen/screen01.png"));
+		gameObje2 = new GameObjectImg(new ImageIcon("img/GameObject/Screen/screen02.png"));
+		gameObje3 = new GameObjectImg(new ImageIcon("img/GameObject/Screen/screen03.png"));
+		gameObje4 = new GameObjectImg(new ImageIcon("img/GameObject/Screen/screen04.png"));
+	}
+	
+	// 장애물, 학점 등 이미지 설정
+	private void gameObjectImgSet(GameObjectImg gobje)
+	{
+		hpCoffee = gobje.getHpCoffee();
+		hpEDrink = gobje.getHpEDrink();
+		
+		obstacle1 = gobje.getObstacle1();
+		obstacle2 = gobje.getObstacle2();
+		obstacleDeath = gobje.getObstacleDeath();
+		
+		scoreA = gobje.getScoreA();
+		scoreB = gobje.getScoreB();
+		scoreC = gobje.getScoreC();
+	}
+	
 	// 스윙 컴포넌트가 자신의 모양을 그리는 메서드
 	@Override
 	protected void paintComponent(Graphics g) {
 		
 		// Vava 이미지
-		bufferg.drawImage(v1.getImage(), v1.getX(), v1.getY(), v1.getWidth(), v1.getHeight(), null);
+		bufferg.drawImage(vava.getImage(), vava.getX(), vava.getY(), vava.getWidth(), vava.getHeight(), null);
 
 		// 어택볼
 		if (vavaAttack.isAttacking()) 
@@ -277,41 +312,6 @@ public class GamePanel extends JPanel {
 		g.drawImage(bufferImage, 0, 0, this); // 화면에 그림
 	}
 	
-	// vava 이미지 설정
-	private void vavaImgSet(VavaImg vobje)
-	{
-		vavaIc = vobje.getVavaIc();  // 기본
-		hitIc = vobje.getHitIc(); // 충돌
-		attackIc = vobje.getAttackIc(); // 공격
-		//jumpIc = vobje.getJumpIc(); // 점프
-		//doubleJumpIc = vobje.getDoubleJumpIc(); // 2단 점프
-		fallIc = vobje.getFallIc(); // 2단 점프 후 낙하
-	}
-	
-	// 게임 속 오브젝트들의 이미지를 맵마다 다르게 저장해 둠.
-	private void gameObjectStore()
-	{
-		gameObje1 = new GameObjectImg(new ImageIcon("img/GameObject/Screen/screen01.png"));
-		gameObje2 = new GameObjectImg(new ImageIcon("img/GameObject/Screen/screen02.png"));
-		gameObje3 = new GameObjectImg(new ImageIcon("img/GameObject/Screen/screen03.png"));
-		gameObje4 = new GameObjectImg(new ImageIcon("img/GameObject/Screen/screen04.png"));
-	}
-	
-	// 장애물, 학점 등 이미지 설정
-	private void gameObjectImgSet(GameObjectImg gobje)
-	{
-		hpCoffee = gobje.getHpCoffee();
-		hpEDrink = gobje.getHpEDrink();
-		
-		obstacle1 = gobje.getObstacle1();
-		obstacle2 = gobje.getObstacle2();
-		obstacleDeath = gobje.getObstacleDeath();
-		
-		scoreA = gobje.getScoreA();
-		scoreB = gobje.getScoreB();
-		scoreC = gobje.getScoreC();
-	}
-	
 	// 장애물 충돌 (death 장애물 x)
 	private void hitObstacle() 
 	{
@@ -320,19 +320,19 @@ public class GamePanel extends JPanel {
 			@Override
 			public void run() 
 			{
-				v1.setHp(v1.getHp() - 50); // 충돌로 인해 vava 체력 감소. 수치는 나중에 수정.
+				vava.setHp(vava.getHp() - 50); // 충돌로 인해 vava 체력 감소. 수치는 나중에 수정.
 
 				redScreenOn = true; // 충돌되어 레드스크린 on
-				v1.setInvincible(true); // 충돌했으므로 vava를 일시적으로 무적 상태로 변환함.
+				vava.setInvincible(true); // 충돌했으므로 vava를 일시적으로 무적 상태로 변환함.
 
-				v1.setImage(hitIc.getImage()); // vava 충돌 모션으로 변경.
-				v1.setAlpha(60); // vava 투명도 변경. 수치는 나중에 수정.
+				vava.setImage(hitIc.getImage()); // vava 충돌 모션으로 변경.
+				vava.setAlpha(60); // vava 투명도 변경. 수치는 나중에 수정.
 
 				hitRedScreen();
 				hitChangeIc();
 				hitBlinkEffect();
 				
-				v1.setInvincible(false); // vava 무적 상태 off
+				vava.setInvincible(false); // vava 무적 상태 off
 			}
 		}).start();
 	}
@@ -358,8 +358,8 @@ public class GamePanel extends JPanel {
 			e.printStackTrace();
 		}
 
-		if (v1.getImage() == hitIc.getImage()) // 바바 모션을 기본으로 변경
-			v1.setImage(vavaIc.getImage());
+		if (vava.getImage() == hitIc.getImage()) // 바바 모션을 기본으로 변경
+			vava.setImage(vavaIc.getImage());
 	}
 	
 	private void hitBlinkEffect() 
@@ -368,10 +368,10 @@ public class GamePanel extends JPanel {
 		for (int j = 0; j < 10; j++) // 충돌하여 무적 상태임을 보여주기 위해 vava가 10번 깜빡거림.
 		{
 
-			if (v1.getAlpha() == 60) // 수치는 나중에 수정
-				v1.setAlpha(160);
+			if (vava.getAlpha() == 60) // 수치는 나중에 수정
+				vava.setAlpha(160);
 			else
-				v1.setAlpha(60);
+				vava.setAlpha(60);
 			
 			try {
 				Thread.sleep(500);
@@ -380,7 +380,7 @@ public class GamePanel extends JPanel {
 			}
 		}
 
-		v1.setAlpha(255); // vava 투명도 원상 복귀.
+		vava.setAlpha(255); // vava 투명도 원상 복귀.
 	}
 	
 	public void update() 
@@ -464,7 +464,7 @@ public class GamePanel extends JPanel {
             mapCArr = getPic(tmpM);
             
             int tmpML = mapSArr[0];
-            this.mapL += tmpML; // mapLength 갱신
+            this.mapL += tmpML; // mapL 갱신
             
         } catch (Exception e1) {
         	e1.printStackTrace();
@@ -478,6 +478,8 @@ public class GamePanel extends JPanel {
   	//게임 오브젝트 초기화 initObject()와 동일.
   	private void gameObjeSet() 
   	{
+  		vava = new Vava(vavaIc.getImage()); // vava 생성
+  		
   		mapLthList = new ArrayList<>(); // 맵 시작하는 부분 체크
 
   		gameObjectStore();
@@ -493,6 +495,8 @@ public class GamePanel extends JPanel {
 
   		gameMapSet(4, mapL);
   		mapLthList.add(mapL);
+  		
+  		screenFade = new Color(0, 0, 0, 0);
 
   		backScreenImg = gameObje1.getbackScreenImg();
   		backScreenImg = gameObje2.getbackScreenImg();
@@ -504,7 +508,12 @@ public class GamePanel extends JPanel {
   		back21 = new Screen(backScreenImg.getImage(), 0, 0, backScreenImg.getImage().getWidth(null), backScreenImg.getImage().getHeight(null));
   		back22 = new Screen(backScreenImg.getImage(), backScreenImg.getImage().getWidth(null), 0, backScreenImg.getImage().getWidth(null), backScreenImg.getImage().getHeight(null));
   		
-  		screenFade = new Color(0, 0, 0, 0);
+  		obstacleList = new ArrayList<>(); // 장애물 리스트
+  		scoreList = new ArrayList<>(); // 스코어 리스트
+  		platforms = new ArrayList<>(); // 발판 리스트
+  		
+  		hpBar = new ImageIcon("img/hpbar.png"); // 경로들은 나중에 수정
+  		redScreenIc = new ImageIcon("img/redscreen.png");
   	}
 	
 	// 맵 설정을 변경함. 배경 변경, 체력 조정, 장애물 충돌 등등
