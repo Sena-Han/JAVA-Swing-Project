@@ -16,6 +16,14 @@ public class Obstacle {
 	private int countAttack = 0; // 2단 장애물이 공격받은 횟수 카운트
 
 	private boolean death = false; // death 장애물 구분
+	
+	public Obstacle(Image image, int x, int y, int width, int height) {
+        this.image = image;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
 
 	public int getX() {
 		return x;

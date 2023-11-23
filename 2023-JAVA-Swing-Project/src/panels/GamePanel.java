@@ -11,6 +11,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.Color;
 import java.awt.CardLayout;
 import java.awt.AlphaComposite;
@@ -37,6 +38,7 @@ import inside.VavaImg;
 import inside.VavaJump;
 
 import main.Main;
+import main.ListenAdapter;
 
 public class GamePanel extends JPanel {
 	
@@ -166,6 +168,68 @@ public class GamePanel extends JPanel {
         add(useBoosterItemButton);
 	}
 	
+	// initListener()와 동일
+	private void keyListenerSet()
+	{
+		addKeyListener(new KeyAdapter() 
+		{
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+				{
+					if (!escKeyOn) 
+					{
+						escKeyOn = true;
+						repaint();
+					} 
+					else
+						escKeyOn = false;
+				}
+			}
+		});
+	}
+	
+
+	// runRepaint()와 동일
+	private void gameRepaint() {
+		new Thread(new Runnable() 
+		{
+			@Override
+			public void run() 
+			{
+				while (true) 
+				{
+					repaint();
+					
+					if (escKeyOn) 
+					{
+						while (escKeyOn) 
+						{
+							try 
+							{
+								Thread.sleep(10);
+							} 
+							catch (Exception e) 
+							{
+								e.printStackTrace();
+							}
+						}
+					}
+					
+					try 
+					{
+						Thread.sleep(10);
+					} 
+					catch (Exception e) 
+					{
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
+	}
+	
 	// vava 이미지 설정
 	private void vavaImgSet(VavaImg vobje)
 	{
@@ -242,7 +306,7 @@ public class GamePanel extends JPanel {
 		{
 			Obstacle tmpObstacle = obstacleList.get(i);
 
-			if (tmpObstacle.getX() > 0 && tmpObstacle.getX() < 100) // 나중에 좌표 수정해야함
+			if (tmpObstacle.getX() > -90 && tmpObstacle.getX() < 180) // 나중에 좌표 수정해야함
 			{
 				bufferg.drawImage(tmpObstacle.getImage(), tmpObstacle.getX(), tmpObstacle.getY(), tmpObstacle.getWidth(),
 						tmpObstacle.getHeight(), null);
@@ -308,7 +372,27 @@ public class GamePanel extends JPanel {
 			bufferg.setColor(screenFade);
 			bufferg.fillRect(0, 0, this.getWidth(), this.getHeight());
 		}
+		
+		// 바바 hp 게이지
+		bufferg.drawImage(hpBar.getImage(), 20, 30, null);
+		bufferg.setColor(Color.BLACK);
+		bufferg.fillRect(84 + (int) (470 * ((double) vava.getHp() / 1000)), 65, 1 + 470 - (int) (470 * ((double) vava.getHp() / 1000)), 21);
 
+		// 무적 (나중에 수정)
+		if (vava.isInvincible()) 
+		{
+			alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) vava.getAlpha() / 255);
+			g2D.setComposite(alpha);
+
+			bufferg.drawImage(vava.getImage(), vava.getX() - 110, vava.getY() - 170,
+					vavaIc.getImage().getWidth(null) * 8 / 10, vavaIc.getImage().getHeight(null) * 8 / 10, null);
+
+			alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 255 / 255);
+			g2D.setComposite(alpha);
+		} 
+		else 
+			bufferg.drawImage(vava.getImage(), vava.getX() - 110, vava.getY() - 170, vavaIc.getImage().getWidth(null) * 8 / 10, vavaIc.getImage().getHeight(null) * 8 / 10, null);
+		
 		g.drawImage(bufferImage, 0, 0, this); // 화면에 그림
 	}
 	
@@ -473,6 +557,18 @@ public class GamePanel extends JPanel {
         int maxX, maxY;
         maxX = mapSArr[0]; // 넓이
         maxY = mapSArr[1]; // 높이
+        
+        // 일단 death 장애물은 제외
+        for (int i = 0; i < maxX; i += 2) // i 값 증가치 나중에 수정
+        {
+			for (int j = 0; j < maxY; j += 2) 
+			{
+				if (mapCArr[i][j] == 522) // 값은 나중에 수정
+					obstacleList.add(new Obstacle(obstacle1.getImage(), i * 40 + l * 40, j * 40, 80, 80));
+				else if (mapCArr[i][j] == 522) // 값은 나중에 수정
+					obstacleList.add(new Obstacle(obstacle2.getImage(), i * 40 + l * 40, j * 40, 80, 160));
+			}
+		}
   	}
   	
   	//게임 오브젝트 초기화 initObject()와 동일.
