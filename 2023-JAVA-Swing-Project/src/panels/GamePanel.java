@@ -666,11 +666,8 @@ public class GamePanel extends JPanel {
 			public void run()
 			{
 				// 학점 
-<<<<<<< HEAD
+
 				 for (int i = 0; i < scoreList.size(); i++) {
-=======
-				for (int i = 0; i < scoreList.size(); i++) {
->>>>>>> branch 'main' of https://github.com/Sena-Han/2023-JAVA-Swing-Project.git
 
 					Score tmpScore = scoreList.get(i); // 리스트 안에 있는 개별 학점 불러옴
 
