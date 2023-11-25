@@ -108,6 +108,9 @@ public class GamePanel extends JPanel {
 	
 	Vava vava; // 바바 객체
 	
+	int front;
+	int foot;
+	
 	JFrame sFrame;
 	CardLayout cardLayout;
 	
@@ -269,23 +272,17 @@ public class GamePanel extends JPanel {
 		public void gameSet(VavaImg va) {
 
 			setFocusable(true);
-
-			vavaImgSet(va); // 쿠키이미지를 세팅
-
-			gameObjeSet(); // 게임 내 지형지물 인스턴스 생성
-
-			keyListenerSet(); // 키리스너 추가
-
-			gameRepaint(); // 리페인트 무한반복 실행
+			vavaImgSet(va);
+			gameObjeSet();
+			keyListenerSet();
+			gameRepaint();
 		}
 
 		// 게임을 시작한다
 		public void gameStart() {
 
-			gamePlayMapSet(); // 배경 젤리 발판 장애물 작동
-
-			//fall(); // 낙하 스레드 발동
-
+			gamePlayMapSet();
+			//fall();
 		}
 	
 	
@@ -639,6 +636,37 @@ public class GamePanel extends JPanel {
 	// 맵 설정을 변경함. 배경 변경, 체력 조정, 장애물 충돌 등등
 	private void gamePlayMapSet() // mapMove()와 동일.
 	{
-		// 내용 추가 예정
+		new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				// 장애물
+				for (int i = 0; i < obstacleList.size(); i++)
+				{
+					Obstacle tmpObstacle = obstacleList.get(i);
+					
+					if (tmpObstacle.getX() < -90) // 수치 나중에 수정
+					{
+						// 나중에 추가
+					}
+					else
+					{
+						// 게임스피드 관련
+						
+						front = vava.getX() + vava.getWidth();
+						foot = vava.getY() + vava.getHeight();
+						
+						if (!vava.isInvincible() && tmpObstacle.getX() + tmpObstacle.getWidth() / 2 >= vava.getX()
+								&& tmpObstacle.getX() + tmpObstacle.getWidth() / 2 <= front
+								&& tmpObstacle.getY() + tmpObstacle.getHeight() / 2 >= vava.getY()
+								&& tmpObstacle.getY() + tmpObstacle.getHeight() / 2 <= foot) 
+						{
+							hitObstacle();
+						}
+					}
+				}
+			}
+		}).start();
 	}
 }
