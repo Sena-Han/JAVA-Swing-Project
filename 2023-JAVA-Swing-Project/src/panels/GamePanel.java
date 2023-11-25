@@ -599,6 +599,7 @@ public class GamePanel extends JPanel {
         				scoreList.add(new Score(scoreC.getImage(), i * 40 + l * 40, j * 40, 30, 30, 255, 3456));
 
         			} 
+        			// image, x좌표, y좌표, 너비, 높이, 투명도, 점수
         		}
         }
         		

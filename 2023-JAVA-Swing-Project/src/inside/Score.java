@@ -25,7 +25,7 @@ public class Score {
 	        this.width = width;
 	        this.height = height;
 	        this.alpha = alpha;
-	        this.score = score;  
+	        this.score = score;
 	}
 
 	public int getX() {
