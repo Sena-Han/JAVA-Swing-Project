@@ -82,8 +82,8 @@ public class GamePanel extends JPanel {
 	private ImageIcon scoreB; // B학점 이미지
 	private ImageIcon scoreC; // C학점 이미지
 	
-	// score
-	private int sumScore = 0; // 결과점수 변수 (누적 score)
+	private ImageIcon scoreEffectIC; 
+	private int sumScore = 0; // score 누적 변수 선언
 
 	// Item
 	private JButton useGiantItemButton;
@@ -94,6 +94,7 @@ public class GamePanel extends JPanel {
 	private List<Score> scoreList; // 스코어 리스트
 	private List<Platform> platforms; // 발판 리스트
 	private List<Integer> mapLthList; // 맵의 시작하는 부분 체크
+	
 	
 	// map
 	private int[] mapSArr;  // 맵 사이즈를 저장할 배열
@@ -107,6 +108,9 @@ public class GamePanel extends JPanel {
 	private AlphaComposite alpha; // 투명도
 	
 	Vava vava; // 바바 객체
+	
+	int front;
+	int foot;
 	
 	JFrame sFrame;
 	CardLayout cardLayout;
@@ -263,7 +267,28 @@ public class GamePanel extends JPanel {
 		scoreA = gobje.getScoreA();
 		scoreB = gobje.getScoreB();
 		scoreC = gobje.getScoreC();
+		
+		scoreEffectIC = gobje.getscoreEffectIc();
+
 	}
+	
+	// 게임을 세팅한다
+		public void gameSet(VavaImg va) {
+
+			setFocusable(true);
+			vavaImgSet(va);
+			gameObjeSet();
+			keyListenerSet();
+			gameRepaint();
+		}
+
+		// 게임을 시작한다
+		public void gameStart() {
+
+			gamePlayMapSet();
+			// fall();
+		}
+	
 	
 	// 스윙 컴포넌트가 자신의 모양을 그리는 메서드
 	@Override
@@ -615,7 +640,95 @@ public class GamePanel extends JPanel {
 	// 맵 설정을 변경함. 배경 변경, 체력 조정, 장애물 충돌 등등
 	private void gamePlayMapSet() // mapMove()와 동일.
 	{
-		// 내용 추가 예정
+		new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				
+				// 학점 
+				 (int i = 0; i < scoreList.size(); i++) {
+
+						Score tmpScore = scoreList.get(i); // 리스트 안에 있는 개별 학점 불러옴
+
+						if (tmpScore.getX() < -90) { // 학점의 x 좌표에 따른 학점 제거 (x좌표 조정 필요)
+
+							// 
+
+						} else {
+
+							// 스피드 조절 여기에 
+							// ex) tmpScore.setX(tmpScore.getX() - gameSpeed); 
+							if (tmpScore.getImage() == scoreEffectIC.getImage() && tmpScore.getAlpha() > 4) {
+								tmpScore.setAlpha(tmpScore.getAlpha() - 5);
+							}
+
+							foot = vava.getY() + vava.getHeight(); // vava 발 위치 재스캔
+
+							if ( // 캐릭터의 범위 안에 학점이 있으면 아이템을 먹는다.
+									tmpScore.getX() + tmpScore.getWidth() * 20 / 100 >= vava.getX()
+									&& tmpScore.getX() + tmpScore.getWidth() * 80 / 100 <= front
+									&& tmpScore.getY() + tmpScore.getWidth() * 20 / 100 >= vava.getY()
+									&& tmpScore.getY() + tmpScore.getWidth() * 80 / 100 <= foot
+									&& tmpScore.getImage() != scoreEffectIC.getImage()) {
+
+								if (tmpScore.getImage() == hpCoffee.getImage() || tmpScore.getImage() == hpEDrink.getImage()) {
+									if ((vava.getHp() + 100) > 1000) {
+										vava.setHp(1000);
+									} else {
+										vava.setHp(vava.getHp() + 100);
+									}
+								}
+								tmpScore.setImage(scoreEffectIC.getImage()); // 젤리의 이미지를 이펙트로 바꾼다
+								sumScore = sumScore + tmpScore.getScore(); // 총점수에 젤리 점수를 더한다
+
+							} else if ( // vava 범위 안에 학점이 있으면 아이템을 먹음
+							tmpScore.getX() + tmpScore.getWidth() * 20 / 100 >= vava.getX()
+									&& tmpScore.getX() + tmpScore.getWidth() * 80 / 100 <= front
+									&& tmpScore.getY() + tmpScore.getWidth() * 20 / 100 >= vava.getY()
+											+ vava.getHeight() * 1 / 3
+									&& tmpScore.getY() + tmpScore.getWidth() * 80 / 100 <= foot
+									&& tmpScore.getImage() != scoreEffectIC.getImage()) {
+
+								if (tmpScore.getImage() == hpCoffee.getImage() || tmpScore.getImage() == hpEDrink.getImage()) {
+									if ((vava.getHp() + 100) > 1000) {
+										vava.setHp(1000);
+									} else {
+										vava.setHp(vava.getHp() + 100);
+									}
+								}
+								tmpScore.setImage(scoreEffectIC.getImage()); // 젤리의 이미지를 이펙트로 바꾼다
+								sumScore = sumScore + tmpScore.getScore(); // 총점수에 젤리 점수를 더한다
+						}
+						}
+				 }
+				
+				// 장애물
+				for (int i = 0; i < obstacleList.size(); i++)
+				{
+					Obstacle tmpObstacle = obstacleList.get(i);
+					
+					if (tmpObstacle.getX() < -90) // 수치 나중에 수정
+					{
+						// 나중에 추가
+					}
+					else
+					{
+						// 게임스피드 관련
+						
+						front = vava.getX() + vava.getWidth();
+						foot = vava.getY() + vava.getHeight();
+						
+						if (!vava.isInvincible() && tmpObstacle.getX() + tmpObstacle.getWidth() / 2 >= vava.getX()
+								&& tmpObstacle.getX() + tmpObstacle.getWidth() / 2 <= front
+								&& tmpObstacle.getY() + tmpObstacle.getHeight() / 2 >= vava.getY()
+								&& tmpObstacle.getY() + tmpObstacle.getHeight() / 2 <= foot) 
+						{
+							hitObstacle();
+						}
+					}
+				}
+			}
+		}).start();
 	}
 }
-
