@@ -12,8 +12,6 @@ public class VavaImg {
 	//private ImageIcon jumpIc; // 점프 이미지
 	//private ImageIcon doubleJumpIc; // 2단 점프 이미지
 	private ImageIcon fallIc; // 2단 점프 후 낙하 이미지
-	
-	
 
 	public ImageIcon getVavaIc() {
 		return vavaIc;
