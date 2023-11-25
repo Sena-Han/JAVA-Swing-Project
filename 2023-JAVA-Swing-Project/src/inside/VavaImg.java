@@ -5,6 +5,7 @@ import javax.swing.ImageIcon;
 public class VavaImg {
 	
 	// 바바 이미지들
+	
 	private ImageIcon vavaIc; // 기본 이미지
 	private ImageIcon hitIc; // 충돌 이미지
 	private ImageIcon attackIc; // 공격 이미지
@@ -12,6 +13,8 @@ public class VavaImg {
 	//private ImageIcon doubleJumpIc; // 2단 점프 이미지
 	private ImageIcon fallIc; // 2단 점프 후 낙하 이미지
 	
+	
+
 	public ImageIcon getVavaIc() {
 		return vavaIc;
 	}

@@ -265,6 +265,30 @@ public class GamePanel extends JPanel {
 		scoreC = gobje.getScoreC();
 	}
 	
+	// 게임을 세팅한다
+		public void gameSet(VavaImg va) {
+
+			setFocusable(true);
+
+			vavaImgSet(va); // 쿠키이미지를 세팅
+
+			gameObjeSet(); // 게임 내 지형지물 인스턴스 생성
+
+			keyListenerSet(); // 키리스너 추가
+
+			gameRepaint(); // 리페인트 무한반복 실행
+		}
+
+		// 게임을 시작한다
+		public void gameStart() {
+
+			gamePlayMapSet(); // 배경 젤리 발판 장애물 작동
+
+			//fall(); // 낙하 스레드 발동
+
+		}
+	
+	
 	// 스윙 컴포넌트가 자신의 모양을 그리는 메서드
 	@Override
 	protected void paintComponent(Graphics g) {
