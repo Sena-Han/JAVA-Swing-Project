@@ -16,7 +16,7 @@ public class Score {
 	private int sumScore;
 	
 	// 젤리 먹으면 투명해지게 하도록 하는 투명도 조절 변수
-	private int alpha;
+	private float alpha;
 
 	public int getX() {
 		return x;
@@ -61,6 +61,13 @@ public class Score {
 	public float getAlpha() {
 		return alpha;
 	}
-
+	
+	public void setAlpha(float alpha) {
+		this.alpha = alpha;
+	}
+	
+	public int getScore() {
+		return sumScore;
+	}
 
 }

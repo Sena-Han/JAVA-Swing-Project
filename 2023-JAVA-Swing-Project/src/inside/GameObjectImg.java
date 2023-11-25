@@ -21,6 +21,8 @@ public class GameObjectImg {
 	private ImageIcon scoreB; // B학점 이미지
 	private ImageIcon scoreC; // C학점 이미지
 	
+	private ImageIcon scoreEffectIc; 
+	
 	// 맵 이미지 관련된 발판 같은 것도 들어가야 할 듯
     
     public GameObjectImg() {
@@ -102,6 +104,14 @@ public class GameObjectImg {
 
 	public void setScoreC(ImageIcon scoreC) {
 		this.scoreC = scoreC;
+	}
+	
+	public ImageIcon getscoreEffectIc() {
+		return scoreEffectIc;
+	}
+
+	public void setscoreEffectIc(ImageIcon scoreEffectIc) {
+		this.scoreEffectIc = scoreEffectIc;
 	}
 
 }
