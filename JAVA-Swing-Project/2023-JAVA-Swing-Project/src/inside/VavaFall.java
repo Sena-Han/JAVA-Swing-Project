@@ -77,7 +77,6 @@ public class VavaFall {
                         }
 
                         vava.setFall(false);
-                        
 
                         if (!vava.isJump()) {// 발이 땅에 닿고 점프 중이 아닐 때 더블점프 카운트를 0으로 변경
                             vava.setCountJump(0);
@@ -94,5 +93,4 @@ public class VavaFall {
         }).start();
     }
 }
-
 

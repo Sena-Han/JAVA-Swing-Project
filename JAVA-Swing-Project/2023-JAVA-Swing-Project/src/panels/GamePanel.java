@@ -107,6 +107,7 @@ public class GamePanel extends JPanel {
 	
 	private AlphaComposite alpha; // 투명도
 	
+	// 바바 관련
 	Vava vava; // 바바 객체
 	
 	int front;
