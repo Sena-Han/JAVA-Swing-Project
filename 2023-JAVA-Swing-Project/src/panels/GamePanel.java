@@ -273,22 +273,22 @@ public class GamePanel extends JPanel {
 	}
 	
 	// 게임을 세팅한다
-		public void gameSet(VavaImg va) {
+	public void gameSet(VavaImg va) {
 
-			setFocusable(true);
-			vavaImgSet(va);
-			gameObjeSet();
-			keyListenerSet();
-			gameRepaint();
-		}
+		setFocusable(true);
+		vavaImgSet(va);
+		gameObjeSet();
+		keyListenerSet();
+		gameRepaint();
+	}
 
 		// 게임을 시작한다
-		public void gameStart() {
+	public void gameStart() {
 
-			gamePlayMapSet();
-			// fall();
-		}
-	
+		gamePlayMapSet();
+
+		// fall();
+	}
 	
 	// 스윙 컴포넌트가 자신의 모양을 그리는 메서드
 	@Override
@@ -582,20 +582,21 @@ public class GamePanel extends JPanel {
         int maxX, maxY;
         maxX = mapSArr[0]; // 넓이
         maxY = mapSArr[1]; // 높이
+        
      // 학점
         for (int i = 0; i < maxX; i += 1) { 
         		for (int j = 0; j < maxY; j += 1) {
         			if (mapCArr[i][j] == 5) { // 색값이 5면 scoreA 생성
         				// 40 = 좌표에 곱하는 수, 30 = 높이 (수정할 때 참고) 
-        				scoreList.add(new Score(scoreA.getImage(), i * 40 + mapLength * 40, j * 40, 30, 30, 255, 1234));
+        				scoreList.add(new Score(scoreA.getImage(), i * 40 + l * 40, j * 40, 30, 30, 255, 1234));
 
         			} else if (mapCArr[i][j] == 10) { // 색값이 10이면 scoreB 생성
         				// 40 = 좌표에 곱하는 수, 30 = 높이 (수정할 때 참고) 
-        				scoreList.add(new Score(scoreB.getImage(), i * 40 + mapLength * 40, j * 40, 30, 30, 255, 2345));
+        				scoreList.add(new Score(scoreB.getImage(), i * 40 + l * 40, j * 40, 30, 30, 255, 2345));
 
         			} else if (mapCArr[i][j] == 15) { // 색값이 15면 scoreC 생성
         				// 40 = 좌표에 곱하는 수, 30 = 높이 (수정할 때 참고) 
-        				scoreList.add(new Score(scoreC.getImage(), i * 40 + mapLength * 40, j * 40, 30, 30, 255, 3456));
+        				scoreList.add(new Score(scoreC.getImage(), i * 40 + l * 40, j * 40, 30, 30, 255, 3456));
 
         			} 
         		}
@@ -663,62 +664,66 @@ public class GamePanel extends JPanel {
 			@Override
 			public void run()
 			{
-				
 				// 학점 
+<<<<<<< HEAD
 				 for (int i = 0; i < scoreList.size(); i++) {
+=======
+				for (int i = 0; i < scoreList.size(); i++) {
+>>>>>>> branch 'main' of https://github.com/Sena-Han/2023-JAVA-Swing-Project.git
 
-						Score tmpScore = scoreList.get(i); // 리스트 안에 있는 개별 학점 불러옴
+					Score tmpScore = scoreList.get(i); // 리스트 안에 있는 개별 학점 불러옴
 
-						if (tmpScore.getX() < -90) { // 학점의 x 좌표에 따른 학점 제거 (x좌표 조정 필요)
-
+					if (tmpScore.getX() < -90) { // 학점의 x 좌표에 따른 학점 제거 (x좌표 조정 필요)
 							// 
+						} 
+					else {
 
-						} else {
+						// 스피드 조절 여기에 
+						// ex) tmpScore.setX(tmpScore.getX() - gameSpeed); 
+						
+						if (tmpScore.getImage() == scoreEffectIC.getImage() && tmpScore.getAlpha() > 4) {
+							tmpScore.setAlpha(tmpScore.getAlpha() - 5);
+						}
 
-							// 스피드 조절 여기에 
-							// ex) tmpScore.setX(tmpScore.getX() - gameSpeed); 
-							if (tmpScore.getImage() == scoreEffectIC.getImage() && tmpScore.getAlpha() > 4) {
-								tmpScore.setAlpha(tmpScore.getAlpha() - 5);
+						foot = vava.getY() + vava.getHeight(); // vava 발 위치 재스캔
+
+						// 캐릭터의 범위 안에 학점이 있으면 아이템을 먹는다.
+						if (tmpScore.getX() + tmpScore.getWidth() * 20 / 100 >= vava.getX() 
+								&& tmpScore.getX() + tmpScore.getWidth() * 80 / 100 <= front
+								&& tmpScore.getY() + tmpScore.getWidth() * 20 / 100 >= vava.getY()
+								&& tmpScore.getY() + tmpScore.getWidth() * 80 / 100 <= foot 
+								&& tmpScore.getImage() != scoreEffectIC.getImage()) {
+							
+							if (tmpScore.getImage() == hpCoffee.getImage() || tmpScore.getImage() == hpEDrink.getImage()) {
+								if ((vava.getHp() + 100) > 1000) {
+									vava.setHp(1000);
+								} 
+								else {
+									vava.setHp(vava.getHp() + 100);
+									}
+								}
+							tmpScore.setImage(scoreEffectIC.getImage()); // 젤리의 이미지를 이펙트로 바꾼다
+							sumScore = sumScore + tmpScore.getScore(); // 총점수에 젤리 점수를 더한다
+
+							} //vava 범위 안에 학점이 있으면 아이템을 먹음
+						else if (tmpScore.getX() + tmpScore.getWidth() * 20 / 100 >= vava.getX() 
+								&& tmpScore.getX() + tmpScore.getWidth() * 80 / 100 <= front
+								&& tmpScore.getY() + tmpScore.getWidth() * 20 / 100 >= vava.getY() + vava.getHeight() * 1 / 3
+								&& tmpScore.getY() + tmpScore.getWidth() * 80 / 100 <= foot
+								&& tmpScore.getImage() != scoreEffectIC.getImage()) {
+							
+							if (tmpScore.getImage() == hpCoffee.getImage() || tmpScore.getImage() == hpEDrink.getImage()) {
+								if ((vava.getHp() + 100) > 1000) {
+									vava.setHp(1000);
+								} 
+								else {
+									vava.setHp(vava.getHp() + 100);
+								}
 							}
-
-							foot = vava.getY() + vava.getHeight(); // vava 발 위치 재스캔
-
-							if ( // 캐릭터의 범위 안에 학점이 있으면 아이템을 먹는다.
-									tmpScore.getX() + tmpScore.getWidth() * 20 / 100 >= vava.getX()
-									&& tmpScore.getX() + tmpScore.getWidth() * 80 / 100 <= front
-									&& tmpScore.getY() + tmpScore.getWidth() * 20 / 100 >= vava.getY()
-									&& tmpScore.getY() + tmpScore.getWidth() * 80 / 100 <= foot
-									&& tmpScore.getImage() != scoreEffectIC.getImage()) {
-
-								if (tmpScore.getImage() == hpCoffee.getImage() || tmpScore.getImage() == hpEDrink.getImage()) {
-									if ((vava.getHp() + 100) > 1000) {
-										vava.setHp(1000);
-									} else {
-										vava.setHp(vava.getHp() + 100);
-									}
-								}
-								tmpScore.setImage(scoreEffectIC.getImage()); // 젤리의 이미지를 이펙트로 바꾼다
-								sumScore = sumScore + tmpScore.getScore(); // 총점수에 젤리 점수를 더한다
-
-							} else if ( // vava 범위 안에 학점이 있으면 아이템을 먹음
-							tmpScore.getX() + tmpScore.getWidth() * 20 / 100 >= vava.getX()
-									&& tmpScore.getX() + tmpScore.getWidth() * 80 / 100 <= front
-									&& tmpScore.getY() + tmpScore.getWidth() * 20 / 100 >= vava.getY()
-											+ vava.getHeight() * 1 / 3
-									&& tmpScore.getY() + tmpScore.getWidth() * 80 / 100 <= foot
-									&& tmpScore.getImage() != scoreEffectIC.getImage()) {
-
-								if (tmpScore.getImage() == hpCoffee.getImage() || tmpScore.getImage() == hpEDrink.getImage()) {
-									if ((vava.getHp() + 100) > 1000) {
-										vava.setHp(1000);
-									} else {
-										vava.setHp(vava.getHp() + 100);
-									}
-								}
-								tmpScore.setImage(scoreEffectIC.getImage()); // 젤리의 이미지를 이펙트로 바꾼다
-								sumScore = sumScore + tmpScore.getScore(); // 총점수에 젤리 점수를 더한다
+							tmpScore.setImage(scoreEffectIC.getImage()); // 젤리의 이미지를 이펙트로 바꾼다
+							sumScore = sumScore + tmpScore.getScore(); // 총점수에 젤리 점수를 더한다
 						}
-						}
+					}
 				 }
 				
 				// 장애물
