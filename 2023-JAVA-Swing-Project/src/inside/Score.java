@@ -13,10 +13,20 @@ public class Score {
 	private int height;
 	
 	// 스코어 점수
-	private int sumScore;
+	private int score;
 	
 	// 젤리 먹으면 투명해지게 하도록 하는 투명도 조절 변수
 	private float alpha;
+
+	public Score(Image image, int x, int y, int width, int height, int alpha, int n) {
+	        this.image = image;
+	        this.x = x;
+	        this.y = y;
+	        this.width = width;
+	        this.height = height;
+	        this.alpha = alpha;
+	        this.score = score;
+	}
 
 	public int getX() {
 		return x;
@@ -67,7 +77,7 @@ public class Score {
 	}
 	
 	public int getScore() {
-		return sumScore;
+		return score;
 	}
 
 }
