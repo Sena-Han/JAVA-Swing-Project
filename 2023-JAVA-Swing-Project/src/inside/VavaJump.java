@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class VavaJump implements KeyListener {
+public class VavaJump implements KeyListener, Runnable {
 	private Vava vava;
 	
 	private ImageIcon jumpIc = new ImageIcon("jumpImage.png"); // 실제 파일 경로에 맞게 나중에 수정
@@ -39,11 +39,11 @@ public class VavaJump implements KeyListener {
         if (keyCode == KeyEvent.VK_UP) {
             if (!isJumping) {
                 // 1단 점프
-            	jump();
+            	new Thread(this).start();
                 System.out.println("1단 점프");
             } else if (canDoubleJump) {
                 // 2단 점프
-                jump();
+            	new Thread(this).start();
                 System.out.println("2단 점프");
                 canDoubleJump = false;
             }
@@ -60,6 +60,12 @@ public class VavaJump implements KeyListener {
         // 키를 타이핑할 때
     }
 
+    @Override
+    public void run() {
+        jump();
+    }
+    
+    
     private void jump() {
     	if (!vava.isFall() && !vava.isJump()) {
             if (vava.getCountJump() == 0) {
@@ -76,6 +82,18 @@ public class VavaJump implements KeyListener {
             vava.setJump(true);
             vava.setCountJump(vava.getCountJump() + 1);
             isJumping = true;
+            
+            
+            long startTime = System.currentTimeMillis();
+            while (System.currentTimeMillis() - startTime < 1000) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            isJumping = false;
     	}
     }
 }
