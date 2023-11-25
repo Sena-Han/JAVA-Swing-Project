@@ -582,7 +582,25 @@ public class GamePanel extends JPanel {
         int maxX, maxY;
         maxX = mapSArr[0]; // 넓이
         maxY = mapSArr[1]; // 높이
-        
+     // 학점
+        for (int i = 0; i < maxX; i += 1) { 
+        		for (int j = 0; j < maxY; j += 1) {
+        			if (mapCArr[i][j] == 5) { // 색값이 5면 scoreA 생성
+        				// 40 = 좌표에 곱하는 수, 30 = 높이 (수정할 때 참고) 
+        				scoreList.add(new Score(scoreA.getImage(), i * 40 + mapLength * 40, j * 40, 30, 30, 255, 1234));
+
+        			} else if (mapCArr[i][j] == 10) { // 색값이 10이면 scoreB 생성
+        				// 40 = 좌표에 곱하는 수, 30 = 높이 (수정할 때 참고) 
+        				scoreList.add(new Score(scoreB.getImage(), i * 40 + mapLength * 40, j * 40, 30, 30, 255, 2345));
+
+        			} else if (mapCArr[i][j] == 15) { // 색값이 15면 scoreC 생성
+        				// 40 = 좌표에 곱하는 수, 30 = 높이 (수정할 때 참고) 
+        				scoreList.add(new Score(scoreC.getImage(), i * 40 + mapLength * 40, j * 40, 30, 30, 255, 3456));
+
+        			} 
+        		}
+        }
+        		
         // 일단 death 장애물은 제외
         for (int i = 0; i < maxX; i += 2) // i 값 증가치 나중에 수정
         {
@@ -647,7 +665,7 @@ public class GamePanel extends JPanel {
 			{
 				
 				// 학점 
-				 (int i = 0; i < scoreList.size(); i++) {
+				 for (int i = 0; i < scoreList.size(); i++) {
 
 						Score tmpScore = scoreList.get(i); // 리스트 안에 있는 개별 학점 불러옴
 
