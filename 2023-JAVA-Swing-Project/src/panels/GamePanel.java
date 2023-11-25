@@ -286,8 +286,9 @@ public class GamePanel extends JPanel {
 		public void gameStart() {
 
 			gamePlayMapSet();
+
 			// fall();
-		}
+
 	
 	
 	// 스윙 컴포넌트가 자신의 모양을 그리는 메서드
