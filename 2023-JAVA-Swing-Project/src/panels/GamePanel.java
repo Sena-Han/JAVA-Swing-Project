@@ -34,6 +34,7 @@ import inside.Score;
 import inside.Screen;
 import inside.Vava;
 import inside.VavaAttack;
+import inside.VavaFall;
 import inside.VavaImg;
 import inside.VavaJump;
 
@@ -74,6 +75,8 @@ public class GamePanel extends JPanel {
 	private ImageIcon obstacle2; // 2단 장애물
 	private ImageIcon obstacleDeath; // death 장애물
 	
+	
+	
 	// hit
 	private ImageIcon redScreenIc; // 충돌 시 레드스크린
 
@@ -95,6 +98,11 @@ public class GamePanel extends JPanel {
 	private List<Platform> platforms; // 발판 리스트
 	private List<Integer> mapLthList; // 맵의 시작하는 부분 체크
 	
+	//발판
+	private Platform platform;
+    
+	//낙하
+	private VavaFall vavaFall;
 	
 	// map
 	private int[] mapSArr;  // 맵 사이즈를 저장할 배열
@@ -143,6 +151,8 @@ public class GamePanel extends JPanel {
 		
 		// vavaAttack 객체 초기화
         vavaAttack = new VavaAttack();
+        // platform = new Platform(initialX, initialY, "platformImage.png"); // Platform 객체 초기화, 다시 수정해야함
+        vavaFall = new VavaFall(platform); //VavaFall 객체 초기화
         
         // 아이템 버튼 초기화
         useGiantItemButton = new JButton("거대화 아이템 사용");
@@ -493,17 +503,12 @@ public class GamePanel extends JPanel {
 		vava.setAlpha(255); // vava 투명도 원상 복귀.
 	}
 	
-	public void update() 
-	{
-		// 발판 이동 로직
-		movePlatforms();
-		// 그 외 게임 업데이트 로직
-	}
+	
 	
 	// 발판을 이동시킴
     private void movePlatforms() 
     {
-        int platformSpeed = 5; // 발판 이동 속도
+        int platformSpeed = 5; // 발판 이동 속도, 나중에
 
         for (Platform platform : platforms) {
             platform.move(platformSpeed);
@@ -654,6 +659,8 @@ public class GamePanel extends JPanel {
   		scoreList = new ArrayList<>(); // 스코어 리스트
   		platforms = new ArrayList<>(); // 발판 리스트
   		
+  		platforms.add(platform); // 추가된 부분: List에 발판 추가
+  		
   		hpBar = new ImageIcon("img/hpbar.png"); // 경로들은 나중에 수정
   		redScreenIc = new ImageIcon("img/redscreen.png");
   	}
@@ -725,6 +732,28 @@ public class GamePanel extends JPanel {
 						}
 					}
 				 }
+				 
+				//발판....뭔가 이상해서 나중에 수정....
+				 
+//				 List<Platform> platformsToRemove = new ArrayList<>(); // 임시 리스트를 만들어 삭제할 발판들을 저장
+//
+//				 private void gamePlayMapSet() {
+//					    List<Platform> platformsToRemove = new ArrayList<>(); // 임시 리스트를 만들어 삭제할 발판들을 저장
+//
+//					    for (int i = 0; i < platformList.size(); i++) {
+//					        Platform tempPlatform = platformList.get(i);
+//
+//					        if (tempPlatform.getX() < -90) {
+//					            platformsToRemove.add(tempPlatform); // 삭제할 발판을 임시 리스트에 추가
+//					        } else {
+//					            tempPlatform.setX(tempPlatform.getX() - gameSpeed);
+//					        }
+//					    }
+//
+//					    // 임시 리스트에 저장된 발판들을 실제로 삭제
+//					    platformList.removeAll(platformsToRemove);
+//					}
+
 				
 				// 장애물
 				for (int i = 0; i < obstacleList.size(); i++)
