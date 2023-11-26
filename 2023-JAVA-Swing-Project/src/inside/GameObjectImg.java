@@ -6,6 +6,7 @@ public class GameObjectImg {
 	
 	// 배경
     private ImageIcon backScreenImg; // 배경 이미지
+    private ImageIcon feverScoreImg; // 피버타임 배경 
     
     // hp
     private ImageIcon hpCoffee; // hp 회복 아이템 이미지
@@ -29,12 +30,32 @@ public class GameObjectImg {
     	// 기본 생성
     }
     
-    public GameObjectImg(ImageIcon backScreenImg) {
+    public GameObjectImg(ImageIcon backScreenImg, ImageIcon feverScoreImg) {
         // 이미지를 직접 전달받는 생성자
         this.backScreenImg = backScreenImg;
+        this.feverScoreImg = feverScoreImg;
     }
     
-    public ImageIcon getbackScreenImg() {
+    public GameObjectImg(ImageIcon backScreenImg, ImageIcon feverScoreImg, ImageIcon hpCoffee, ImageIcon hpEDrink, ImageIcon obstacle1, ImageIcon obstacle2, ImageIcon obstacleDeath,
+    		ImageIcon scoreA, ImageIcon scoreB, ImageIcon scoreC, ImageIcon scoreEffectIc) {
+        this.backScreenImg = backScreenImg;
+        this.feverScoreImg = feverScoreImg;
+         
+        this.hpCoffee = hpCoffee;
+        this.hpEDrink = hpEDrink;
+         
+        this.obstacle1 = obstacle1;
+        this.obstacle2 = obstacle2;
+        this.obstacleDeath = obstacleDeath;
+         
+        this.scoreA = scoreA;
+        this.scoreB = scoreB;
+        this.scoreC = scoreC;
+         
+        this.scoreEffectIc = scoreEffectIc;
+   }
+    
+    public ImageIcon getBackScreenImg() {
         return backScreenImg;
     }
 
@@ -113,5 +134,13 @@ public class GameObjectImg {
 	public void setscoreEffectIc(ImageIcon scoreEffectIc) {
 		this.scoreEffectIc = scoreEffectIc;
 	}
+	
+    public ImageIcon getFeverScoreImg() {
+        return feverScoreImg;
+    }
+
+    public void setFeverScoreImg(ImageIcon feverScoreImg) {
+        this.feverScoreImg = feverScoreImg;
+    }
 
 }
