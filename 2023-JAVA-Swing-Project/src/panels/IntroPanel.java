@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 public class IntroPanel extends JPanel {
 	
-	ImageIcon introImg = new ImageIcon("img/intro/intro.jpg");  // 인트로 이미지
+	ImageIcon introImg = new ImageIcon("2023-JAVA-Swing-Project/img/intro/intro.jpg");  // 인트로 이미지
 
 	
 	@Override

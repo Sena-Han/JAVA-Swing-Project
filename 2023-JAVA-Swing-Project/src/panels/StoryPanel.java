@@ -34,10 +34,10 @@ public class StoryPanel extends JPanel {
 		requestFocus();
 
 		storyImages = new ImageIcon[] { 
-				new ImageIcon("img/story/story0.jpg"), new ImageIcon("img/story/story1.jpg"),
-				new ImageIcon("img/story/story2.jpg"), new ImageIcon("img/story/story3.jpg"),
-				new ImageIcon("img/story/story4.jpg"), new ImageIcon("img/story/story5.jpg"),
-				new ImageIcon("img/story/story6.jpg"), new ImageIcon("img/story/story7.jpg"),
+				new ImageIcon("2023-JAVA-Swing-Project/img/story/story0.jpg"), new ImageIcon("2023-JAVA-Swing-Project/img/story/story1.jpg"),
+				new ImageIcon("2023-JAVA-Swing-Project/img/story/story2.jpg"), new ImageIcon("2023-JAVA-Swing-Project/img/story/story3.jpg"),
+				new ImageIcon("2023-JAVA-Swing-Project/img/story/story4.jpg"), new ImageIcon("2023-JAVA-Swing-Project/img/story/story5.jpg"),
+				new ImageIcon("2023-JAVA-Swing-Project/img/story/story6.jpg"), new ImageIcon("2023-JAVA-Swing-Project/img/story/story7.jpg"),
 		};
 
 		currentImageIndex = 0;

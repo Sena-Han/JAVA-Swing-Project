@@ -272,12 +272,12 @@ public class GamePanel extends JPanel {
 	// 게임 속 오브젝트들의 이미지를 맵마다 다르게 저장해 둠.
 	private void gameObjectStore() {
 		try {
-			gameObje1=new GameObjectImg(new ImageIcon("img/GameObject/Screen/bg1.png"), new ImageIcon("img/GameObject/Score/scoreA.png"));
-			gameObje2=new GameObjectImg(new ImageIcon("img/GameObject/Screen/bback1.png"), new ImageIcon("img/GameObject/Score/scoreA.png"));
-			gameObje3=new GameObjectImg(new ImageIcon("img/GameObject/Screen/back1.png"), new ImageIcon("img/GameObject/Score/scoreA.png"));
-			gameObje4=new GameObjectImg(new ImageIcon("img/GameObject/Screen/screen_02.png"), new ImageIcon("img/GameObject/Score/scoreA.png"));
+			gameObje1=new GameObjectImg(new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Screen/bg1.png"), new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Score/scoreA.png"));
+			gameObje2=new GameObjectImg(new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Screen/bback1.png"), new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Score/scoreA.png"));
+			gameObje3=new GameObjectImg(new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Screen/back1.png"), new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Score/scoreA.png"));
+			gameObje4=new GameObjectImg(new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Screen/screen_02.png"), new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Score/scoreA.png"));
 				
-			fever=new GameObjectImg(new ImageIcon("img/GameObject/fever/FeverScreen.jpeg"), new ImageIcon("img/GameObject/FeverScore.png"));
+			fever=new GameObjectImg(new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/fever/FeverScreen.jpeg"), new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/FeverScore.png"));
 				
 		} catch (Exception e) {
 			e.printStackTrace();
