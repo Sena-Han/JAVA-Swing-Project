@@ -381,7 +381,8 @@ public class GamePanel extends JPanel {
 				g2D.setComposite(alpha);
 
 				bufferg.drawImage(tmpScore.getImage(), tmpScore.getX(), tmpScore.getY(), tmpScore.getWidth(), tmpScore.getHeight(), null);
-
+				
+				// alpha 값 다시 되돌리기 (255로)
 				alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 255 / 255);
 				g2D.setComposite(alpha);
 			}
@@ -672,7 +673,7 @@ public class GamePanel extends JPanel {
 					Score tmpScore = scoreList.get(i); // 리스트 안에 있는 개별 학점 불러옴
 
 					if (tmpScore.getX() < -90) { // 학점의 x 좌표에 따른 학점 제거 (x좌표 조정 필요)
-							// 
+							// 발판리스트명.remove(tmpScore)
 						} 
 					else {
 
@@ -703,7 +704,8 @@ public class GamePanel extends JPanel {
 							tmpScore.setImage(scoreEffectIC.getImage()); // 젤리의 이미지를 이펙트로 바꾼다
 							sumScore = sumScore + tmpScore.getScore(); // 총점수에 젤리 점수를 더한다
 
-							} //vava 범위 안에 학점이 있으면 아이템을 먹음
+							} 
+						//vava 범위 안에 학점이 있으면 아이템을 먹음
 						else if (tmpScore.getX() + tmpScore.getWidth() * 20 / 100 >= vava.getX() 
 								&& tmpScore.getX() + tmpScore.getWidth() * 80 / 100 <= front
 								&& tmpScore.getY() + tmpScore.getWidth() * 20 / 100 >= vava.getY() + vava.getHeight() * 1 / 3
@@ -752,4 +754,4 @@ public class GamePanel extends JPanel {
 			}
 		}).start();
 	}
-}
+} // test 주석입니다...
