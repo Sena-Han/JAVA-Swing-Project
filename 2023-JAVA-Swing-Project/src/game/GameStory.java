@@ -48,6 +48,7 @@ public class GameStory extends JPanel{
             public void mousePressed(MouseEvent e) {
                 // mousePressed 이벤트가 발생할  다음 스토리 이미지로 전환
                 currentImageIndex++;
+                //System.out.println(currentImageIndex);
                 if (currentImageIndex < storyImages.length) {
                     repaint(); // 화면 다시 그리기
                 } else {
