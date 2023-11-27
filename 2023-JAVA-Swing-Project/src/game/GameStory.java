@@ -1,4 +1,4 @@
-package panels;
+package game;
 
 import java.awt.CardLayout;
 import java.awt.Graphics;
@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 import main.Main;
 
-public class StoryPanel extends JPanel{
+public class GameStory extends JPanel{
 	JFrame sFrame;
 	CardLayout cardLayout;
 	Main main;
@@ -19,7 +19,7 @@ public class StoryPanel extends JPanel{
 	int currentImageIndex;
 	int imageNum;
 	
-	public StoryPanel(JFrame sFrame, CardLayout cardLayout, Object o) {
+	public GameStory(JFrame sFrame, CardLayout cardLayout, Object o) {
 		this.sFrame = sFrame;
 		this.cardLayout = cardLayout;
 		

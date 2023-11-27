@@ -1,4 +1,4 @@
-package panels;
+package outside;
 
 import java.awt.CardLayout;
 import java.awt.Graphics;
@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class IntroPanel extends JPanel {
+public class GameIntro extends JPanel {
 	
 	ImageIcon introImg = new ImageIcon("2023-JAVA-Swing-Project/img/intro/intro.jpg");  // 인트로 이미지
 
