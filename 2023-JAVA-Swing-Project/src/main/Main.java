@@ -11,21 +11,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import game.GameCore;
+import game.GameStory;
 import inside.Vava;
 import inside.VavaImg;
-import panels.IntroPanel;
-import panels.StoryPanel;
-import panels.GamePanel;
-//import main.ListenAdapter;
+import outside.GameIntro;
 
 
 public class Main extends MouseAdapter {
 	
 	private JFrame frame;
 	
-	private IntroPanel introPanel; // 게임 시작 화면 
-	private StoryPanel storyPanel; //바바 스토리
-	private GamePanel gamePanel;
+	private GameIntro introPanel; // 게임 시작 화면 
+	private GameStory storyPanel; //바바 스토리
+	private GameCore gamePanel;
 	private VavaImg va;
 
 	private CardLayout cardLayout;
@@ -57,13 +56,13 @@ public class Main extends MouseAdapter {
 		cardLayout = new CardLayout(0, 0); // 카드레이아웃 객체 생성
 		frame.getContentPane().setLayout(cardLayout); // 프레임을 카드레이아웃으로 변경
 
-		introPanel = new IntroPanel();
+		introPanel = new GameIntro();
 		introPanel.addMouseListener(this); // intro패널은 여기서 바로 넣는 방식으로 마우스리스너를 추가함.
 		
-		storyPanel = new StoryPanel(frame, cardLayout, this);
+		storyPanel = new GameStory(frame, cardLayout, this);
 		storyPanel.addMouseListener(this);
 		
-		gamePanel = new GamePanel(frame, cardLayout, this);
+		gamePanel = new GameCore(frame, cardLayout, this);
 		
 		introPanel.setLayout(null);
 		storyPanel.setLayout(null);

@@ -1,4 +1,4 @@
-package panels;
+package game;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -47,7 +47,7 @@ import emp.Emp;
 
 import main.Main;
 
-public class GamePanel extends JPanel {
+public class GameCore extends JPanel {
 	
 	// 더블 버퍼링 이미지
 	private Image bufferImage;
@@ -168,7 +168,7 @@ public class GamePanel extends JPanel {
 	
 	Main main;
 	
-	public GamePanel(JFrame sFrame, CardLayout cardLayout, Object o) {
+	public GameCore(JFrame sFrame, CardLayout cardLayout, Object o) {
 		this.sFrame = sFrame;
 		this.cardLayout = cardLayout;
 		if (o instanceof Main) {
