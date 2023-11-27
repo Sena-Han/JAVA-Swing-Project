@@ -304,7 +304,7 @@ public class GameCore extends JPanel {
    
    // vava 이미지 설정
    private void vavaImgSet(VavaImg vobje) {
-      vavaIc = vobje.getVavaIc();  // 기본
+      vavaIc = vobje.getVavaIc();  // 기본 // 해당 위치에서 오류 발생함
       hitIc = vobje.getHitIc(); // 충돌
       attackIc = vobje.getAttackIc(); // 공격
       //jumpIc = vobje.getJumpIc(); // 점프
