@@ -141,4 +141,39 @@ public class Vava {
 	public void setCountAttack(int countAttack) {
 		this.countAttack = countAttack;
 	}
+	private boolean isGiant; // 거대화 아이템 사용 여부 플래그
+    private boolean isBooster; // 부스터 아이템 사용 여부 플래그
+
+    public boolean isGiant() {
+        return isGiant;
+    }
+
+    public void setGiant(boolean giant) {
+        isGiant = giant;
+    }
+
+    public boolean isBooster() {
+        return isBooster;
+    }
+
+    public void setBooster(boolean booster) {
+        isBooster = booster;
+    }
+	public void updateItemDurations() {
+        if (fastTime > 0) {
+            fastTime--;
+            if (fastTime == 0) {
+                // 부스터 효과 만료
+                
+            }
+        }
+
+        if (bigTime > 0) {
+            bigTime--;
+            if (bigTime == 0) {
+                // 거대화 효과 만료
+                
+            }
+        }
+    }
 }
