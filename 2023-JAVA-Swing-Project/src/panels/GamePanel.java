@@ -189,9 +189,10 @@ public class GamePanel extends JPanel {
         useGiantItemButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	if (!vava.isBig()) {
+            	if (!vava.isGiant()) {
             	Item giantItem = new GiantItem("거대화 아이템");
                 giantItem.use(vava); // vava에게 아이템 사용
+                updateItemDurations(vava);
             	}
             }
         });
@@ -204,9 +205,10 @@ public class GamePanel extends JPanel {
         useBoosterItemButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	if (!vava.isFast()) {
+            	if (!vava.isBooster()) {
             	Item boosterItem = new BoosterItem("부스터 아이템");
                 boosterItem.use(vava); // vava에게 아이템 사용
+                updateItemDurations(vava);
             	}
             }
         });
