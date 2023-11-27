@@ -91,31 +91,27 @@ public class Main extends MouseAdapter {
 			cardLayout.show(frame.getContentPane(), "story"); // story패널을 카드레이아웃 최상단으로 변경
 			gameStory.requestFocus(); // 리스너를 story패널에 강제로 줌
 		} else if (e.getComponent().toString().contains("StoryPanel")) {
-			   // 스토리 패널의 마지막 이미지를 눌렀는지 확인
-	         if (gameStory.getCurrentImageIndex() == gameStory.getImageNum() - 1) {
-	              // 마지막 이미지를 눌렀다면, 게임 패널로 전환
-	              cardLayout.show(frame.getContentPane(), "game");
-	              gameCore.gameSet(va);
-	              gameCore.gameStart();
-	              gameCore.requestFocus();
-	              // 스토리 패널에서 게임 패널로의 전환에 필요한 추가 로직을 추가
-	              // 예를 들어, 게임을 초기화하거나 필요한 데이터를 설정하는 등의 작업을 수행할 수 있습니다.
-	          } else {
-	              // 다음 스토리 이미지로 이동
-	              gameStory.moveToNextImage();
-	          }
-			
-			// 여기에 스토리 패널의 마지막 이미지를 눌렀을 때의 동작 추가
-	        // 예를 들어, gamePanel로 전환하는 코드를 추가합니다. 
-
-	        // 여기서는 gamePanel로 전환하는 코드를 추가합니다.
-//	        cardLayout.show(frame.getContentPane(), "game");  // "game"은 gamePanel을 나타내는 카드의 이름입니다.
-//	        gameCore.gameSet(va);
-//	        gameCore.gameStart();
-//	        gameCore.requestFocus();  // gamePanel에 포커스를 설정하여 마우스 이벤트를 감지할 수 있도록 합니다.
-	        
-	        // 그 외에 스토리 패널에서 gamePanel로의 전환에 필요한 로직을 추가합니다.
-	        // 예를 들어, 게임을 초기화하거나 필요한 데이터를 설정하는 등의 작업을 수행할 수 있습니다.
+			if (gameStory.getCurrentImageIndex() == gameStory.getImageNum() - 1) {
+	            cardLayout.show(frame.getContentPane(), "img"); // 마지막 이미지를 눌렀다면 GameVavaImg 패널로 전환
+	            gameVavaImg.requestFocus(); // 리스너를 gameVavaImg 패널에 강제로 줌
+	        } else {
+	            gameStory.moveToNextImage();
+	        }
+	    } else if (e.getComponent().toString().contains("StartBtn")) {
+	    	cardLayout.show(frame.getContentPane(), "game");  // "game"은 gamePanel을 나타내는 카드의 이름입니다.
+	        gameCore.gameSet(gameVavaImg.getVavaImg1());
+	        gameCore.gameStart();
+	        gameCore.requestFocus();  // gamePanel에 포커스를 설정하여 마우스 이벤트를 감지할 수 있도록 합니다.
 	    }
 	}
+	public void handleStoryEnd() {
+	    System.out.println("Current Image Index: " + gameStory.getCurrentImageIndex());
+	    System.out.println("Image Number: " + gameStory.getImageNum());
+
+
+        if (gameStory.getCurrentImageIndex() == gameStory.getImageNum()) {
+            cardLayout.show(frame.getContentPane(), "img");
+            gameVavaImg.requestFocus();
+        }
+    }
 }

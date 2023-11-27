@@ -48,16 +48,16 @@ public class GameStory extends JPanel{
             public void mousePressed(MouseEvent e) {
                 // mousePressed 이벤트가 발생할  다음 스토리 이미지로 전환
                 currentImageIndex++;
-                //System.out.println(currentImageIndex);
                 if (currentImageIndex < storyImages.length) {
                     repaint(); // 화면 다시 그리기
                 } else {
-
-                	// 스토리가 끝났을 때 다음 화면으로 전환하는 코드 
-                    cardLayout.show(sFrame.getContentPane(), "nextPanelName");
+                    // 스토리가 끝났을 때 다음 화면으로 전환하는 코드 
+                    main.handleStoryEnd(); // Main 클래스의 메서드 호출
                 }
-            }
-        });
+            }   
+		});
+		//System.out.println(currentImageIndex);
+        //System.out.println(imageNum);
 	}
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -81,11 +81,6 @@ public class GameStory extends JPanel{
         currentImageIndex++;
         if (currentImageIndex < storyImages.length) {
             repaint();
-        } /*else {
-            cardLayout.show(sFrame.getContentPane(), "game");
-            //main.getGamePanel().gameSet();
-            //main.getGamePanel().gameStart();
-            //main.getGamePanel().requestFocus();
-        }*/
+        }
     }
 }
