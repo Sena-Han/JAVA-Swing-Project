@@ -62,8 +62,10 @@ public class GameCore extends JPanel {
    private ImageIcon fallIc; // 2단 점프 후 낙하 모션
    
    // vava attack
-   private Image attackballImage; // 어택볼 이미지 추가
-   private VavaAttack vavaAttack; // vavaAttack 객체 선언
+   private Image attackballImage; // 어택볼 이미지
+   private VavaAttack vavaAttack; // vavaAttack 객체
+   
+   private VavaJump vavaJump; // VavaJump 객체
    
    // hp
    private ImageIcon hpBar; // hp 게이지
@@ -184,6 +186,7 @@ public class GameCore extends JPanel {
         vavaAttack = new VavaAttack();
         // platform = new Platform(initialX, initialY, "platformImage.png"); // Platform 객체 초기화, 다시 수정해야함
         vavaFall = new VavaFall(platform); //VavaFall 객체 초기화
+        vavaJump = new VavaJump(vava); //vava 객체 초기화..
         
         // 아이템 버튼들 초기화
         useGiantItemButton = new JButton("거대화");
@@ -236,23 +239,40 @@ public class GameCore extends JPanel {
        }
    
    // initListener()와 동일
-   private void keyListenerSet() {
-      addKeyListener(new KeyAdapter() {
-         @Override
-         public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-               if (!escKeyOn) {
-                  escKeyOn = true;
-                  repaint();
-               } 
-               else
-                  escKeyOn = false;
+    private void keyListenerSet() {
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    if (!escKeyOn) {
+                        escKeyOn = true;
+                        repaint();
+                    } else {
+                        escKeyOn = false;
+                    }
+                } else if (e.getKeyCode() == KeyEvent.VK_UP) { 
+                    if (!vavaJump.isJumping()) {
+                        // 1단 점프
+                        new Thread(vavaJump).start();
+                        System.out.println("1단 점프");
+                    } else if (vavaJump.isCanDoubleJump()) {
+                        // 2단 점프
+                        new Thread(vavaJump).start();
+                        System.out.println("2단 점프");
+                        vavaJump.setCanDoubleJump(false);
+                    }
+                }else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                	//공격시작
+                    vavaAttack.startAttack(vava);
+                }
             }
-         }
-      });
-   }
+        });
+        setFocusable(true);
+    }
+
+
       
-   // runRepaint()와 동일
+   // runRepaint()와 동일 
    private void gameRepaint() {
       new Thread(new Runnable() {
          @Override
