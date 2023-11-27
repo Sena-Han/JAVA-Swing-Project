@@ -183,8 +183,8 @@ public class GamePanel extends JPanel {
         // platform = new Platform(initialX, initialY, "platformImage.png"); // Platform 객체 초기화, 다시 수정해야함
         vavaFall = new VavaFall(platform); //VavaFall 객체 초기화
         
-        // 아이템 버튼 초기화
-        useGiantItemButton = new JButton("거대화 아이템 사용");
+        // 아이템 버튼들 초기화
+        useGiantItemButton = new JButton("거대화");
         
         useGiantItemButton.addActionListener(new ActionListener() {
             @Override
@@ -194,10 +194,10 @@ public class GamePanel extends JPanel {
             }
         });
         
-        useGiantItemButton.setBounds(10, 10, 150, 30); // 버튼 위치 설정
+        useGiantItemButton.setBounds(10, 10, 150, 30); // 거대화 버튼 위치 설정 - 추후 조정 (x,y,width,height)
         add(useGiantItemButton);
 
-        useBoosterItemButton = new JButton("부스터 아이템 사용");
+        useBoosterItemButton = new JButton("부스터");
         
         useBoosterItemButton.addActionListener(new ActionListener() {
             @Override
@@ -207,7 +207,7 @@ public class GamePanel extends JPanel {
             }
         });
 
-        useBoosterItemButton.setBounds(170, 10, 150, 30); // 버튼 위치 설정
+        useBoosterItemButton.setBounds(170, 10, 150, 30); // 부스터 버튼 위치 설정 - 추후 조정 (x,y,width,height)
         add(useBoosterItemButton);
 	}
 	
