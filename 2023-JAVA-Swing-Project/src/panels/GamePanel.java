@@ -189,8 +189,10 @@ public class GamePanel extends JPanel {
         useGiantItemButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Item giantItem = new GiantItem("거대화 아이템");
+            	if (!vava.isBig()) {
+            	Item giantItem = new GiantItem("거대화 아이템");
                 giantItem.use(vava); // vava에게 아이템 사용
+            	}
             }
         });
         
@@ -202,14 +204,32 @@ public class GamePanel extends JPanel {
         useBoosterItemButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Item boosterItem = new BoosterItem("부스터 아이템");
+            	if (!vava.isFast()) {
+            	Item boosterItem = new BoosterItem("부스터 아이템");
                 boosterItem.use(vava); // vava에게 아이템 사용
+            	}
             }
         });
 
         useBoosterItemButton.setBounds(170, 10, 150, 30); // 부스터 버튼 위치 설정 - 추후 조정 (x,y,width,height)
         add(useBoosterItemButton);
+        
+        // Timer를 생성하고 주기적으로 updateItemDurations 메서드를 호출
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateItemDurations(vava);
+                // 추가 로직
+            }
+        });
+        timer.start();
 	}
+	 private void updateItemDurations(Vava vava) {
+		 if (vava != null) {
+		        vava.updateItemDurations();
+		    }
+	    }
+
 	
 	
 	// initListener()와 동일
