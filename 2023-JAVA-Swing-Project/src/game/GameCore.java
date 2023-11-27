@@ -194,7 +194,7 @@ public class GameCore extends JPanel {
                if (!vava.isGiant()) {
                Item giantItem = new GiantItem("거대화 아이템");
                 giantItem.use(vava); // vava에게 아이템 사용
-                //updateItemDurations(vava);
+                updateItemDurations(vava);
                }
             }
         });
@@ -210,7 +210,7 @@ public class GameCore extends JPanel {
                if (!vava.isBooster()) {
                Item boosterItem = new BoosterItem("부스터 아이템");
                 boosterItem.use(vava); // vava에게 아이템 사용
-                //updateItemDurations(vava);
+                updateItemDurations(vava);
                }
             }
         });
@@ -222,7 +222,7 @@ public class GameCore extends JPanel {
         Timer timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //updateItemDurations(vava);
+                updateItemDurations(vava);
                 // 추가 로직
             }
         });
