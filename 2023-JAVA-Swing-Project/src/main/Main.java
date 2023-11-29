@@ -98,10 +98,15 @@ public class Main extends MouseAdapter {
 	            gameStory.moveToNextImage();
 	        }
 	    } else if (e.getComponent().toString().contains("StartBtn")) {
-	    	cardLayout.show(frame.getContentPane(), "game");  // "game"은 gamePanel을 나타내는 카드의 이름입니다.
-	        gameCore.gameSet(gameVavaImg.getVavaImg1());
-	        gameCore.gameStart();
-	        gameCore.requestFocus();  // gamePanel에 포커스를 설정하여 마우스 이벤트를 감지할 수 있도록 합니다.
+	    	if (gameVavaImg.getVavaImg1() == null)
+	    		System.out.println("vavaImg is null");
+	    	else
+	    	{
+	    		cardLayout.show(frame.getContentPane(), "game");  // "game"은 gamePanel을 나타내는 카드의 이름입니다.
+	    		gameCore.gameSet(gameVavaImg.getVavaImg1());
+	    		gameCore.gameStart();
+	    		gameCore.requestFocus();  // gamePanel에 포커스를 설정하여 마우스 이벤트를 감지할 수 있도록 합니다.
+	    	}
 	    }
 	}
 	public void handleStoryEnd() {

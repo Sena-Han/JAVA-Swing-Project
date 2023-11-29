@@ -36,6 +36,19 @@ public class GameObjectImg {
         this.feverScoreImg = feverScoreImg;
     }
     
+    public GameObjectImg(ImageIcon backScreenImg, ImageIcon feverScoreImg, ImageIcon obstacle1, ImageIcon obstacle2, ImageIcon scoreA, ImageIcon scoreB, ImageIcon scoreC) {
+        // 이미지를 직접 전달받는 생성자
+        this.backScreenImg = backScreenImg;
+        this.feverScoreImg = feverScoreImg;
+        
+        this.obstacle1 = obstacle1;
+        this.obstacle2 = obstacle2;
+        
+        this.scoreA = scoreA;
+        this.scoreB = scoreB;
+        this.scoreC = scoreC;
+    }
+    
     public GameObjectImg(ImageIcon backScreenImg, ImageIcon feverScoreImg, ImageIcon hpCoffee, ImageIcon hpEDrink, ImageIcon obstacle1, ImageIcon obstacle2, ImageIcon obstacleDeath,
     		ImageIcon scoreA, ImageIcon scoreB, ImageIcon scoreC, ImageIcon scoreEffectIc) {
         this.backScreenImg = backScreenImg;
