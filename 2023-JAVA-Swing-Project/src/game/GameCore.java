@@ -11,6 +11,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.Color;
@@ -21,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 import java.awt.image.PixelGrabber;
@@ -146,7 +149,6 @@ public class GameCore extends JPanel {
    int front;
    int foot;
 
-   
    Screen back1;
    //Screen back12;
    //Screen back21;
@@ -182,61 +184,61 @@ public class GameCore extends JPanel {
             System.out.println("올바른 타입이 아닙니다.");
             this.main = null; // 또는 다른 기본값 설정
         }      
-      // vavaAttack 객체 초기화
-        vavaAttack = new VavaAttack();
-        // platform = new Platform(initialX, initialY, "platformImage.png"); // Platform 객체 초기화, 다시 수정해야함
-        vavaFall = new VavaFall(platform); //VavaFall 객체 초기화
-        vavaJump = new VavaJump(vava); //vava 객체 초기화..
-        
-        // 아이템 버튼들 초기화
-        useGiantItemButton = new JButton("거대화");
-        
-        useGiantItemButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               if (!vava.isGiant()) {
-               Item giantItem = new GiantItem("거대화 아이템");
-                giantItem.use(vava); // vava에게 아이템 사용
-                updateItemDurations(vava);
-               }
-            }
-        });
-        
-        useGiantItemButton.setBounds(10, 10, 150, 30); // 거대화 버튼 위치 설정 - 추후 조정 (x,y,width,height)
-        add(useGiantItemButton);
-
-        useBoosterItemButton = new JButton("부스터");
-        
-        useBoosterItemButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               if (!vava.isBooster()) {
-               Item boosterItem = new BoosterItem("부스터 아이템");
-                boosterItem.use(vava); // vava에게 아이템 사용
-                updateItemDurations(vava);
-               }
-            }
-        });
-
-        useBoosterItemButton.setBounds(170, 10, 150, 30); // 부스터 버튼 위치 설정 - 추후 조정 (x,y,width,height)
-        add(useBoosterItemButton);
-        
-        // Timer를 생성하고 주기적으로 updateItemDurations 메서드를 호출
-        Timer timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateItemDurations(vava);
-                // 추가 로직
-            }
-        });
-        timer.start();
+//      // vavaAttack 객체 초기화
+//        vavaAttack = new VavaAttack();
+//        // platform = new Platform(initialX, initialY, "platformImage.png"); // Platform 객체 초기화, 다시 수정해야함
+//        vavaFall = new VavaFall(platform); //VavaFall 객체 초기화
+//        vavaJump = new VavaJump(vava); //vava 객체 초기화..
+//        
+//        // 아이템 버튼들 초기화
+//        useGiantItemButton = new JButton("거대화");
+//        
+//        useGiantItemButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//               if (!vava.isGiant()) {
+//               Item giantItem = new GiantItem("거대화 아이템");
+//                giantItem.use(vava); // vava에게 아이템 사용
+//                updateItemDurations(vava);
+//               }
+//            }
+//        });
+//        
+//        useGiantItemButton.setBounds(10, 10, 150, 30); // 거대화 버튼 위치 설정 - 추후 조정 (x,y,width,height)
+//        add(useGiantItemButton);
+//
+//        useBoosterItemButton = new JButton("부스터");
+//        
+//        useBoosterItemButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//               if (!vava.isBooster()) {
+//               Item boosterItem = new BoosterItem("부스터 아이템");
+//                boosterItem.use(vava); // vava에게 아이템 사용
+//                updateItemDurations(vava);
+//               }
+//            }
+//        });
+//
+//        useBoosterItemButton.setBounds(170, 10, 150, 30); // 부스터 버튼 위치 설정 - 추후 조정 (x,y,width,height)
+//        add(useBoosterItemButton);
+//        
+//        // Timer를 생성하고 주기적으로 updateItemDurations 메서드를 호출
+//        Timer timer = new Timer(1000, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                updateItemDurations(vava);
+//                // 추가 로직
+//            }
+//        });
+//        timer.start();
    }
    
-    private void updateItemDurations(Vava vava) {
-       if (vava != null) {
-              vava.updateItemDurations();
-          }
-       }
+//    private void updateItemDurations(Vava vava) {
+//       if (vava != null) {
+//              vava.updateItemDurations();
+//          }
+//       }
    
    // initListener()와 동일
     private void keyListenerSet() {
@@ -250,21 +252,21 @@ public class GameCore extends JPanel {
                     } else {
                         escKeyOn = false;
                     }
-                } else if (e.getKeyCode() == KeyEvent.VK_UP) { 
-                    if (!vavaJump.isJumping()) {
-                        // 1단 점프
-                        new Thread(vavaJump).start();
-                        System.out.println("1단 점프");
-                    } else if (vavaJump.isCanDoubleJump()) {
-                        // 2단 점프
-                        new Thread(vavaJump).start();
-                        System.out.println("2단 점프");
-                        vavaJump.setCanDoubleJump(false);
-                    }
-                }else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                	//공격시작
-                    vavaAttack.startAttack(vava);
-                }
+                } //else if (e.getKeyCode() == KeyEvent.VK_UP) { 
+//                    if (!vavaJump.isJumping()) {
+//                        // 1단 점프
+//                        new Thread(vavaJump).start();
+//                        System.out.println("1단 점프");
+//                    } else if (vavaJump.isCanDoubleJump()) {
+//                        // 2단 점프
+//                        new Thread(vavaJump).start();
+//                        System.out.println("2단 점프");
+//                        vavaJump.setCanDoubleJump(false);
+//                    }
+//                }else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+//                	//공격시작
+//                    vavaAttack.startAttack(vava);
+//                }
             }
         });
         setFocusable(true);
@@ -318,11 +320,15 @@ public class GameCore extends JPanel {
 //         vavaImg1 = new VavaImg(new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_attack.png"), new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_attack.png"), new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_attack.png"),
 //                  new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_attack.png"));
          gameObje1=new GameObjectImg(new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Screen/bg1.png"), new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Score/scoreA.png"));
+//         gameObje1=new GameObjectImg(new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Screen/bg1.png"), new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Score/scoreA.png"),
+//        		 new ImageIcon("2023-JAVA-Swing-Project/img/tacleTest10.png"), new ImageIcon("2023-JAVA-Swing-Project/img/tacleTest20.png"),
+//        		 new ImageIcon("2023-JAVA-Swing-Project/img/jelly1Test.png"), new ImageIcon("2023-JAVA-Swing-Project/img/jelly2Test.png"),
+//        		 new ImageIcon("2023-JAVA-Swing-Project/img/jelly3Test.png"));
          gameObje2=new GameObjectImg(new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Screen/bback1.png"), new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Score/scoreA.png"));
          gameObje3=new GameObjectImg(new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Screen/back1.png"), new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Score/scoreA.png"));
          gameObje4=new GameObjectImg(new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Screen/screen_02.png"), new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Score/scoreA.png"));
             
-         fever=new GameObjectImg(new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/fever/FeverScreen.jpeg"), new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/FeverScore.png"));
+         //fever=new GameObjectImg(new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/fever/FeverScreen.jpeg"), new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/FeverScore.png"));
             
       } catch (Exception e) {
          e.printStackTrace();
@@ -358,21 +364,21 @@ public class GameCore extends JPanel {
    
    public void gameStart() {
       gamePlayMapSet();
-      fillFeverGage();
+      //fillFeverGage();
       // fall();
    }
    
    // 스윙 컴포넌트가 자신의 모양을 그리는 메서드
    @Override
    protected void paintComponent(Graphics g) {
-      // Vava 이미지
-      bufferg.drawImage(vava.getImage(), vava.getX(), vava.getY(), vava.getWidth(), vava.getHeight(), null);
-
-      // 어택볼
-      if (vavaAttack.isAttacking()) {
-         bufferg.drawImage(vavaAttack.getAttackballImage(), vavaAttack.getAttackballX(), vavaAttack.getAttackballY(),
-                        vavaAttack.getAttackballWidth(), vavaAttack.getAttackballHeight(), null);
-      }  
+//      // Vava 이미지
+//      bufferg.drawImage(vava.getImage(), vava.getX(), vava.getY(), vava.getWidth(), vava.getHeight(), null);
+//
+//      // 어택볼
+//      if (vavaAttack.isAttacking()) {
+//         bufferg.drawImage(vavaAttack.getAttackballImage(), vavaAttack.getAttackballX(), vavaAttack.getAttackballY(),
+//                        vavaAttack.getAttackballWidth(), vavaAttack.getAttackballHeight(), null);
+//      }  
       
       Graphics2D g2D = (Graphics2D) bufferg;
       
@@ -389,12 +395,12 @@ public class GameCore extends JPanel {
       super.paintComponent(bufferg);
       super.paintComponent(g);
 
-      // 발판
-      for (Platform platform : platforms) {
-          g.drawImage(platform.getImage(), platform.getX(), platform.getY(), this);
-      }
+//      // 발판
+//      for (Platform platform : platforms) {
+//          g.drawImage(platform.getImage(), platform.getX(), platform.getY(), this);
+//      }
 
-      super.paintComponent(bufferg);
+//      super.paintComponent(bufferg);
 
       // 장애물
       for (int i = 0; i < obstacleList.size(); i++) {
@@ -451,27 +457,27 @@ public class GameCore extends JPanel {
                }
             }
             
-      // fever score
-      for (int i = 0; i < feverScoreList.size(); i++) {
-         Score tmpFeverScore = scoreList.get(i);
-
-         if (tmpFeverScore.getX() > -90 && tmpFeverScore.getX() < 810) {
-
-            alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
-                  (float) tmpFeverScore.getAlpha() / 255);
-            g2D.setComposite(alpha); // 투명화
-
-            bufferg.drawImage(tmpFeverScore.getImage(), tmpFeverScore.getX(), tmpFeverScore.getY(), tmpFeverScore.getWidth(),
-                  tmpFeverScore.getHeight(), null);
-
-            alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 255 / 255);
-            g2D.setComposite(alpha);
-         }
-      }
+//      // fever score
+//      for (int i = 0; i < feverScoreList.size(); i++) {
+//         Score tmpFeverScore = scoreList.get(i);
+//
+//         if (tmpFeverScore.getX() > -90 && tmpFeverScore.getX() < 810) {
+//
+//            alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+//                  (float) tmpFeverScore.getAlpha() / 255);
+//            g2D.setComposite(alpha); // 투명화
+//
+//            bufferg.drawImage(tmpFeverScore.getImage(), tmpFeverScore.getX(), tmpFeverScore.getY(), tmpFeverScore.getWidth(),
+//                  tmpFeverScore.getHeight(), null);
+//
+//            alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 255 / 255);
+//            g2D.setComposite(alpha);
+//         }
+//      }
       
       //배경이미지 
       if (inFeverTime) {
-         bufferg.drawImage(feverBack.getImage(), feverBack.getX(), 0, feverBack.getWidth(), feverBack.getHeight(), null);
+         //bufferg.drawImage(feverBack.getImage(), feverBack.getX(), 0, feverBack.getWidth(), feverBack.getHeight(), null);
       } else {
          bufferg.drawImage(back1.getImage(), back1.getX(), 0, back1.getWidth(), back1.getHeight(), null);
          bufferg.drawImage(back2.getImage(), back2.getX(), 0, back2.getWidth(), back2.getHeight(), null);
@@ -492,10 +498,10 @@ public class GameCore extends JPanel {
       bufferg.fillRect(84 + (int) (470 * ((double) vava.getHp() / 1000)), 65, 1 + 470 - (int) (470 * ((double) vava.getHp() / 1000)), 21);
       
       
-      //피버타임 게이지 
-      bufferg.drawImage(feverBar.getImage(), 20, 50, null);
-      bufferg.setColor(Color.YELLOW);
-      bufferg.fillRect(84 + (int) (470 * ((double) feverGage.getFg() / 100)), 65, 1 + 470 - (int) (470 * ((double) feverGage.getFg() / 100)), 21);
+//      //피버타임 게이지 
+//      bufferg.drawImage(feverBar.getImage(), 20, 50, null);
+//      bufferg.setColor(Color.YELLOW);
+//      bufferg.fillRect(84 + (int) (470 * ((double) feverGage.getFg() / 100)), 65, 1 + 470 - (int) (470 * ((double) feverGage.getFg() / 100)), 21);
       
       
       // 무적 (나중에 수정)
@@ -514,7 +520,7 @@ public class GameCore extends JPanel {
          bufferg.drawImage(vava.getImage(), vava.getX() - 110, vava.getY() - 170, vavaIc.getImage().getWidth(null) * 8 / 10, vavaIc.getImage().getHeight(null) * 8 / 10, null);
       
             // 점수를 그린다
-      Emp.drawFancyString(g2D, Integer.toString(sumScore+feverSumScore), 600, 58, 30, Color.WHITE);
+//      Emp.drawFancyString(g2D, Integer.toString(sumScore+feverSumScore), 600, 58, 30, Color.WHITE);
       
       // 화면에 그림
       g.drawImage(bufferImage, 0, 0, this); 
@@ -584,22 +590,23 @@ public class GameCore extends JPanel {
       vava.setAlpha(255); // vava 투명도 원상 복귀.
    }
 
-   // 발판을 이동시킴
-    private void movePlatforms() 
-    {
-        int platformSpeed = 5; // 발판 이동 속도, 나중에
-
-        for (Platform platform : platforms) {
-            platform.move(platformSpeed);
-        }
-    }
-
-   public void update() {
-      // 발판 이동 로직
-      movePlatforms();
-      // 그 외 게임 업데이트 로직
-   }
-// 이미지의 크기를 가져오는 메서드
+//   // 발판을 이동시킴
+//    private void movePlatforms() 
+//    {
+//        int platformSpeed = 5; // 발판 이동 속도, 나중에
+//
+//        for (Platform platform : platforms) {
+//            platform.move(platformSpeed);
+//        }
+//    }
+//
+//   public void update() {
+//      // 발판 이동 로직
+//      movePlatforms();
+//      // 그 외 게임 업데이트 로직
+//   }
+   
+   // 이미지의 크기를 가져오는 메서드
    private int[] getSize(String src) throws Exception {
        // 파일 경로로부터 이미지 파일을 읽어옴
       
@@ -615,57 +622,76 @@ public class GameCore extends JPanel {
        return tempSize;
        */
       
-      try {
-           // 파일 경로로부터 이미지 파일을 읽어옴
-           File imgf = new File(src);
-           BufferedImage img = ImageIO.read(imgf);
+	   File imgf = new File(src);
+	    
+       // 1. 파일 경로 확인
+       System.out.println("File path: " + imgf.getAbsolutePath());
 
-           // 이미지의 너비와 높이를 가져와 배열에 저장
-           int width = img.getWidth();
-           int height = img.getHeight();
-           int[] tempSize = {width, height};
-
-           // 이미지의 너비와 높이를 포함한 배열 반환
-           return tempSize;
-       } catch (IOException e) {
-           // 파일을 읽을 수 없는 경우 예외 처리
-           e.printStackTrace();
-           //throw new Exception("Error reading image file: " + e.getMessage());
-           System.out.println("Error reading image file: " + e.getMessage());
-           System.exit(0); // 이미지 불러오기 실패 시 프로그램 종료
-           return null; // 아래 코드에서 사용하지 않기 위해 null 반환
-
+       // 2. 파일 존재 여부 확인
+       if (!imgf.exists()) {
+           System.err.println("File does not exist.");
+           return null;  // 또는 적절한 예외 처리
        }
-       
 
+       // 3. 파일 읽기 권한 확인
+       if (!imgf.canRead()) {
+           System.err.println("No read access to the file.");
+           return null;  // 또는 적절한 예외 처리
+       }
+	    
+	    BufferedImage img = ImageIO.read(imgf);
+	    
+	    // 이미지의 너비와 높이를 가져와 배열에 저장
+	    int width = img.getWidth();
+	    int height = img.getHeight();
+	    int[] tempSize = { width, height };
+	    
+	    // 이미지의 너비와 높이를 포함한 배열 반환
+	    return tempSize;
    }
    
    // 이미지의 픽셀값을 가져오는 메서드
    private int[][] getPic(String src) throws Exception {
-       // 파일 경로로부터 이미지 파일을 읽어옴
-       File imgf = new File(src);
-       BufferedImage img = ImageIO.read(imgf);
-       
-       // 이미지의 너비와 높이를 가져옴
-       int width = img.getWidth();
-       int height = img.getHeight();
-       
-       // 이미지의 픽셀값을 저장할 배열 초기화
-       int[] pixels = new int[width * height];
-       
-       // PixelGrabber를 사용하여 이미지의 픽셀값을 가져옴
-       PixelGrabber grab = new PixelGrabber(img, 0, 0, width, height, pixels, 0, width);
-       grab.grabPixels();
-       
-       // 가져온 픽셀값을 2차원 배열로 변환하여 저장
-       int[][] picture = new int[width][height];
-       for (int i = 0; i < pixels.length; i++) {
-           // RGB값을 포함한 픽셀값을 배열에 저장
-           picture[i % width][i / width] = pixels[i] + 16777216;
-       }
-       
-       // 이미지의 픽셀값을 포함한 2차원 배열 반환
-       return picture;
+	    // 파일 경로로부터 이미지 파일을 읽어옴
+	    File imgf = new File(src);
+
+        // 1. 파일 경로 확인
+        System.out.println("File path: " + imgf.getAbsolutePath());
+
+        // 2. 파일 존재 여부 확인
+        if (!imgf.exists()) {
+            System.err.println("File does not exist.");
+            return null;  // 또는 적절한 예외 처리
+        }
+
+        // 3. 파일 읽기 권한 확인
+        if (!imgf.canRead()) {
+            System.err.println("No read access to the file.");
+            return null;  // 또는 적절한 예외 처리
+        }
+
+	    BufferedImage img = ImageIO.read(imgf);
+	    
+	    // 이미지의 너비와 높이를 가져옴
+	    int width = img.getWidth();
+	    int height = img.getHeight();
+	    
+	    // 이미지의 픽셀값을 저장할 배열 초기화
+	    int[] pixels = new int[width * height];
+	    
+	    // PixelGrabber를 사용하여 이미지의 픽셀값을 가져옴
+	    PixelGrabber grab = new PixelGrabber(img, 0, 0, width, height, pixels, 0, width);
+	    grab.grabPixels();
+	    
+	    // 가져온 픽셀값을 2차원 배열로 변환하여 저장
+	    int[][] picture = new int[width][height];
+	    for (int i = 0; i < pixels.length; i++) {
+	        // RGB값을 포함한 픽셀값을 배열에 저장
+	        picture[i % width][i / width] = pixels[i] + 16777216;
+	    }
+	    
+	    // 이미지의 픽셀값을 포함한 2차원 배열 반환
+	    return picture;
    }
 
    //맵 초기화(그림판 이미지를 받아서 세팅)
@@ -673,18 +699,15 @@ public class GameCore extends JPanel {
       String tmpM = null;
       int tmpML = 0;
 
-
-        if (num == 1) {
-            tmpM = "img/map/map1.png";
-        } else if (num == 2) {
-            tmpM = "img/map/map2.JPEG";
-        } else if (num == 3) {
-            tmpM = "img/map/map3.JPEG";
-        } else if (num == 4) {
-            tmpM = "img/map/map4.JPEG";
-        } else if (num == 5) {
-           tmpM = "img/map/map5.JPEG";
-        }
+      if (num == 1) {
+          tmpM = "2023-JAVA-Swing-Project/img/map/map1.JPEG"; // 체크를 위해 잠시 바꿈 02로.
+      } else if (num == 2) {
+          tmpM = "2023-JAVA-Swing-Project/img/map/map2.JPEG";
+      } else if (num == 3) {
+          tmpM = "2023-JAVA-Swing-Project/img/map/map3.JPEG";
+      } else if (num == 4) {
+          tmpM = "2023-JAVA-Swing-Project/img/map/map4.JPEG";
+      }
         
         try {
             sizeArr = getSize(tmpM); // 맵 사이즈를 배열에 저장
@@ -719,22 +742,22 @@ public class GameCore extends JPanel {
            }
         }
         
-        //피버타임 스코어 
-        for (int i = 0; i < maxX; i += 1) { // 젤리는 1칸을 차지하기 때문에 1,1사이즈로 반복문을 돌린다.
-         for (int j = 0; j < maxY; j += 1) {
-            if (mapCArr[i][j] == 46729) { // 색값이 16776960일 경우 기본젤리 생성
-               // 좌표에 80을 곱하고, 넓이와 높이는 60으로 한다.
-               feverScoreList.add(new FeverScore(scoreAplus.getImage(), i * 80 + l  * 80, j * 80, 60, 60, 255, 5678));
-
-            } 
-         }
-      }
+//        //피버타임 스코어 
+//        for (int i = 0; i < maxX; i += 1) { // 젤리는 1칸을 차지하기 때문에 1,1사이즈로 반복문을 돌린다.
+//         for (int j = 0; j < maxY; j += 1) {
+//            if (mapCArr[i][j] == 46729) { // 색값이 16776960일 경우 기본젤리 생성
+//               // 좌표에 80을 곱하고, 넓이와 높이는 60으로 한다.
+//               feverScoreList.add(new FeverScore(scoreAplus.getImage(), i * 80 + l  * 80, j * 80, 60, 60, 255, 5678));
+//
+//            } 
+//         }
+//      }
         // 일단 death 장애물은 제외
         for (int i = 0; i < maxX; i += 2) {// i 값 증가치 나중에 수정
          for (int j = 0; j < maxY; j += 2) {
             if (mapCArr[i][j] == 522) // 값은 나중에 수정
                obstacleList.add(new Obstacle(obstacle1.getImage(), i * 40 + l * 40, j * 40, 80, 80));
-            else if (mapCArr[i][j] == 522) // 값은 나중에 수정
+            else if (mapCArr[i][j] == 16711830) // 값은 나중에 수정
                obstacleList.add(new Obstacle(obstacle2.getImage(), i * 40 + l * 40, j * 40, 80, 160));
          }
       }
@@ -762,9 +785,9 @@ public class GameCore extends JPanel {
       gameMapSet(4, mapL);
       mapLthList.add(mapL);
       
-      gameObjectImgSet(fever);
-      gameMapSet(5, mapL);
-      mapLthList.add(mapL);
+//      gameObjectImgSet(fever);
+//      gameMapSet(5, mapL);
+//      mapLthList.add(mapL);
       
       screenFade = new Color(0,0,0,0);
 
@@ -773,7 +796,7 @@ public class GameCore extends JPanel {
       backScreenImg3=gameObje3.getBackScreenImg();
       backScreenImg4=gameObje4.getBackScreenImg();
       
-      feverScreen=fever.getBackScreenImg();
+      //feverScreen=fever.getBackScreenImg();
        
       
       back1 = new Screen(backScreenImg.getImage(), 0, 0, backScreenImg.getImage().getWidth(null), backScreenImg.getImage().getHeight(null));
@@ -796,9 +819,9 @@ public class GameCore extends JPanel {
         
         platforms.add(platform); // 추가된 부분: List에 발판 추가
         
-        hpBar = new ImageIcon("img/hpbar.png"); // 경로들은 나중에 수정
-        redScreenIc = new ImageIcon("img/redscreen.png");
-        feverBar = new ImageIcon("img/GameObject/Fever/feverBar.png"); // 피버타임 게이지바 추후 경로 수정 
+        hpBar = new ImageIcon("2023-JAVA-Swing-Project/img/hpbar.png"); // 경로들은 나중에 수정
+        redScreenIc = new ImageIcon("2023-JAVA-Swing-Project/img/redscreen.png");
+        feverBar = new ImageIcon("2023-JAVA-Swing-Project/img/GameObject/Fever/feverBar.png"); // 피버타임 게이지바 추후 경로 수정 
 
 
    }
@@ -878,8 +901,7 @@ public class GameCore extends JPanel {
                         sumScore = sumScore + tmpScore.getScore(); // 총점수에 젤리 점수를 더한다
 
                         }
-                     //vava 범위 안에 학점이 있으면 아이템을 먹음
-                     else if (tmpScore.getX() + tmpScore.getWidth() * 20 / 100 >= vava.getX() 
+                     else if (tmpScore.getX() + tmpScore.getWidth() * 20 / 100 >= vava.getX() //vava 범위 안에 학점이 있으면 아이템을 먹음
                            && tmpScore.getX() + tmpScore.getWidth() * 80 / 100 <= front
                            && tmpScore.getY() + tmpScore.getWidth() * 20 / 100 >= vava.getY() + vava.getHeight() * 1 / 3
                            && tmpScore.getY() + tmpScore.getWidth() * 80 / 100 <= foot
@@ -975,116 +997,116 @@ public class GameCore extends JPanel {
       }
    }
    
-   // feverGage를 초기화하는 메서드
-    public void initializeFeverGage(FeverGage feverGage) {
-        this.feverGage = feverGage;
-    }
-   
-   // 45초 동안 피버타임 게이지를 채우는 메서드
-   private void fillFeverGage() {
-         Timer fillGaugeTimer = new Timer(45 * 1000, new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               feverGage.setFg(100); // 게이지를 100으로 채움
-               startFeverTime(); // 피버타임 시작
-           }
-       });
-       fillGaugeTimer.setRepeats(false); // 한 번만 실행
-       fillGaugeTimer.start(); // 타이머 시작
-       
-        }
-   
-   
-   //피버타임 시작 
-   private void startFeverTime() {
-       inFeverTime = true;
-       feverGage.setFg(0); // 게이지 초기화
-
-       // 현재 실행 중인 배경을 originalBack에 저장
-       originalBack = new Screen(back1.getImage(), back1.getX(), 0, back1.getWidth(), back1.getHeight());
-
-       // 화면 전환 코드를 추가
-       feverScreenTransition(feverBack);
-       
-       // 10초 후에 원래 상태로 돌아오는 타이머 설정
-       Timer returnToNormalTimer = new Timer(10 * 1000, new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
-              //feverMapSet 메서드 호출
-              feverTImeSet();
-              endFeverTime();
-           }
-       });
-       returnToNormalTimer.setRepeats(false); // 한 번만 실행
-       returnToNormalTimer.start();
-   }
-   
-   //피버타임 종료 
-   private void endFeverTime() {
-       inFeverTime = false;
-       feverGage.setFg(0); // 게이지 초기화
-
-       // 화면을 다시 원래 상태로 전환
-       feverScreenTransition(originalBack);
-   }
-   
-   //피버타임 화면 전환 
-   private void feverScreenTransition(Screen newBack) {
-      new Thread(new Runnable() {
-         
-         @Override
-         public void run() {
-            screenFadeOut();
-            
-            //originalBack = new Screen(back1.getImage(), back1.getX(), 0, back1.getWidth(), back1.getHeight());
-            
-            back1=newBack;
-            
-            screenFadeIn();
-            fadeOn=false;
-         }
-      }).start();
-   }
-   
-   private void feverTImeSet() {
-      new Thread(new Runnable() {
-         public void run() {
-            feverPage +=gameSpeed; //화면이 이동하면 이동한 만큼 저장 
-            
-            feverBack.setX(feverBack.getX()-gameSpeed/3);
-            
-            // 젤리위치를 -4 씩 해준다.
-            for (int i = 0; i < feverScoreList.size(); i++) {
-
-               FeverScore tmpFeverScore = feverScoreList.get(i); // 임시 변수에 리스트 안에 있는 개별 젤리를 불러오자
-
-               if (tmpFeverScore.getX() < -90) { // 젤리의 x 좌표가 -90 미만이면 해당 젤리를 제거한다.(최적화)
-
-                  //fieldList.remove(tempJelly);
-
-               } else {
-
-                  if (tmpFeverScore.getImage() == feverScoreEffectIc.getImage() && tmpFeverScore.getAlpha() > 4) {
-                     tmpFeverScore.setAlpha(tmpFeverScore.getAlpha() - 5);
-                  }
-
-                  foot = vava.getY() + vava.getHeight(); // vava 발 위치 재스캔
-
-                  // 캐릭터의 범위 안에 학점이 있으면 아이템을 먹는다.
-                  if (tmpFeverScore.getX() + tmpFeverScore.getWidth() * 20 / 100 >= vava.getX() 
-                        && tmpFeverScore.getX() + tmpFeverScore.getWidth() * 80 / 100 <= front
-                        && tmpFeverScore.getY() + tmpFeverScore.getWidth() * 20 / 100 >= vava.getY()
-                        && tmpFeverScore.getY() + tmpFeverScore.getWidth() * 80 / 100 <= foot 
-                        && tmpFeverScore.getImage() != feverScoreEffectIc.getImage()) {
-                     tmpFeverScore.setImage(feverScoreEffectIc.getImage()); // 젤리의 이미지를 이펙트로 바꾼다
-                     feverSumScore = feverSumScore + tmpFeverScore.getScore(); // 총점수에 젤리 점수를 더한다 
-                     }
-               }
-               
-            }
-            
-         }
-      }).start();
-   }
+//   // feverGage를 초기화하는 메서드
+//    public void initializeFeverGage(FeverGage feverGage) {
+//        this.feverGage = feverGage;
+//    }
+//   
+//   // 45초 동안 피버타임 게이지를 채우는 메서드
+//   private void fillFeverGage() {
+//         Timer fillGaugeTimer = new Timer(45 * 1000, new ActionListener() {
+//           @Override
+//           public void actionPerformed(ActionEvent e) {
+//               feverGage.setFg(100); // 게이지를 100으로 채움
+//               startFeverTime(); // 피버타임 시작
+//           }
+//       });
+//       fillGaugeTimer.setRepeats(false); // 한 번만 실행
+//       fillGaugeTimer.start(); // 타이머 시작
+//       
+//        }
+//   
+//   
+//   //피버타임 시작 
+//   private void startFeverTime() {
+//       inFeverTime = true;
+//       feverGage.setFg(0); // 게이지 초기화
+//
+//       // 현재 실행 중인 배경을 originalBack에 저장
+//       originalBack = new Screen(back1.getImage(), back1.getX(), 0, back1.getWidth(), back1.getHeight());
+//
+//       // 화면 전환 코드를 추가
+//       feverScreenTransition(feverBack);
+//       
+//       // 10초 후에 원래 상태로 돌아오는 타이머 설정
+//       Timer returnToNormalTimer = new Timer(10 * 1000, new ActionListener() {
+//           @Override
+//           public void actionPerformed(ActionEvent e) {
+//              //feverMapSet 메서드 호출
+//              feverTImeSet();
+//              endFeverTime();
+//           }
+//       });
+//       returnToNormalTimer.setRepeats(false); // 한 번만 실행
+//       returnToNormalTimer.start();
+//   }
+//   
+//   //피버타임 종료 
+//   private void endFeverTime() {
+//       inFeverTime = false;
+//       feverGage.setFg(0); // 게이지 초기화
+//
+//       // 화면을 다시 원래 상태로 전환
+//       feverScreenTransition(originalBack);
+//   }
+//   
+//   //피버타임 화면 전환 
+//   private void feverScreenTransition(Screen newBack) {
+//      new Thread(new Runnable() {
+//         
+//         @Override
+//         public void run() {
+//            screenFadeOut();
+//            
+//            //originalBack = new Screen(back1.getImage(), back1.getX(), 0, back1.getWidth(), back1.getHeight());
+//            
+//            back1=newBack;
+//            
+//            screenFadeIn();
+//            fadeOn=false;
+//         }
+//      }).start();
+//   }
+//   
+//   private void feverTImeSet() {
+//      new Thread(new Runnable() {
+//         public void run() {
+//            feverPage +=gameSpeed; //화면이 이동하면 이동한 만큼 저장 
+//            
+//            feverBack.setX(feverBack.getX()-gameSpeed/3);
+//            
+//            // 젤리위치를 -4 씩 해준다.
+//            for (int i = 0; i < feverScoreList.size(); i++) {
+//
+//               FeverScore tmpFeverScore = feverScoreList.get(i); // 임시 변수에 리스트 안에 있는 개별 젤리를 불러오자
+//
+//               if (tmpFeverScore.getX() < -90) { // 젤리의 x 좌표가 -90 미만이면 해당 젤리를 제거한다.(최적화)
+//
+//                  //fieldList.remove(tempJelly);
+//
+//               } else {
+//
+//                  if (tmpFeverScore.getImage() == feverScoreEffectIc.getImage() && tmpFeverScore.getAlpha() > 4) {
+//                     tmpFeverScore.setAlpha(tmpFeverScore.getAlpha() - 5);
+//                  }
+//
+//                  foot = vava.getY() + vava.getHeight(); // vava 발 위치 재스캔
+//
+//                  // 캐릭터의 범위 안에 학점이 있으면 아이템을 먹는다.
+//                  if (tmpFeverScore.getX() + tmpFeverScore.getWidth() * 20 / 100 >= vava.getX() 
+//                        && tmpFeverScore.getX() + tmpFeverScore.getWidth() * 80 / 100 <= front
+//                        && tmpFeverScore.getY() + tmpFeverScore.getWidth() * 20 / 100 >= vava.getY()
+//                        && tmpFeverScore.getY() + tmpFeverScore.getWidth() * 80 / 100 <= foot 
+//                        && tmpFeverScore.getImage() != feverScoreEffectIc.getImage()) {
+//                     tmpFeverScore.setImage(feverScoreEffectIc.getImage()); // 젤리의 이미지를 이펙트로 바꾼다
+//                     feverSumScore = feverSumScore + tmpFeverScore.getScore(); // 총점수에 젤리 점수를 더한다 
+//                     }
+//               }
+//               
+//            }
+//            
+//         }
+//      }).start();
+//   }
    
 }

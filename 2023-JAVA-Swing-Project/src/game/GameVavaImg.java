@@ -59,10 +59,10 @@ public class GameVavaImg extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				
-        		vavaImg1 = new VavaImg(new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_attack.png"), 
+        		vavaImg1 = new VavaImg(new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_origin.gif"), 
         				new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_attack.png"), 
-        				new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_attack.png"),
-        				new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_attack.png")); // 대충 아무거나 넣어둠
+        				new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_jumpend.png"),
+        				new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_down.gif")); // 대충 아무거나 넣어둠
 			}
 		});
 		

@@ -43,7 +43,7 @@ public class VavaJump implements Runnable {
     @Override
     public void run() {
         jump();
-        gameCore.update();
+        //gameCore.update();
     }
     
     
