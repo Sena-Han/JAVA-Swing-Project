@@ -1,10 +1,12 @@
 package inside;
 
 import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Obstacle {
 
 	private Image image;  // 장애물 이미지
+	private ImageIcon imageIcon;
 
 	// 장애물 크기 및 좌표
 	private int x;
@@ -17,12 +19,18 @@ public class Obstacle {
 
 	private boolean death = false; // death 장애물 구분
 	
-	public Obstacle(Image image, int x, int y, int width, int height) {
+	private int state;
+	private int alpha;
+	
+	public Obstacle(Image image, int x, int y, int width, int height, int state, boolean death, int alpha) {
         this.image = image;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.state = state;
+        this.death = death;
+        this.alpha = alpha;
     }
 
 	public int getX() {
@@ -87,5 +95,21 @@ public class Obstacle {
 
 	public void setImage(Image image) {
 		this.image = image;
+	}
+
+	public int getAlpha() {
+		return alpha;
+	}
+
+	public void setAlpha(int alpha) {
+		this.alpha = alpha;
+	}
+
+	public ImageIcon getImageIcon() {
+		return imageIcon;
+	}
+
+	public void setImageIcon(ImageIcon imageIcon) {
+		this.imageIcon = imageIcon;
 	}
 }

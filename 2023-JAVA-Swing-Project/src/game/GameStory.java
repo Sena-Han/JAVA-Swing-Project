@@ -8,12 +8,22 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.*;
+import javax.sound.sampled.Clip;
+
+import inside.BGM;
+
 import main.Main;
 
 public class GameStory extends JPanel{
 	JFrame sFrame;
 	CardLayout cardLayout;
 	Main main;
+	
+	private BGM introMusic;
 	
 	ImageIcon[] storyImages;
 	int currentImageIndex;
@@ -25,6 +35,7 @@ public class GameStory extends JPanel{
 		
 		if (o instanceof Main) {
             this.main = (Main) o;
+            introMusic = new BGM("sound/introMusic.wav", true);
         } else {
             // 예외 처리 또는 기본값 설정
             System.out.println("올바른 타입이 아닙니다.");
@@ -34,10 +45,12 @@ public class GameStory extends JPanel{
 		requestFocus();
 		
 		storyImages = new ImageIcon[] {
-				new ImageIcon("2023-JAVA-Swing-Project/img/story/story0.jpg"),
-				new ImageIcon("2023-JAVA-Swing-Project/img/story/story1.jpg"),
-				new ImageIcon("2023-JAVA-Swing-Project/img/story/story2.jpg"),
-				new ImageIcon("2023-JAVA-Swing-Project/img/story/story3.jpg"),
+				new ImageIcon("img/story/story0.png"),
+				new ImageIcon("img/story/story1.png"),
+				new ImageIcon("img/story/story2.png"),
+				new ImageIcon("img/story/story3.png"),
+				new ImageIcon("img/story/story4.png"),
+				new ImageIcon("img/story/story5.png"),
 		};
 
 		currentImageIndex=0;
@@ -53,11 +66,10 @@ public class GameStory extends JPanel{
                 } else {
                     // 스토리가 끝났을 때 다음 화면으로 전환하는 코드 
                     main.handleStoryEnd(); // Main 클래스의 메서드 호출
+                    introMusic.stop();
                 }
             }   
 		});
-		//System.out.println(currentImageIndex);
-        //System.out.println(imageNum);
 	}
 	@Override
 	protected void paintComponent(Graphics g) {

@@ -4,20 +4,20 @@ import javax.swing.ImageIcon;
 
 public class VavaImg {
 	
-	// 바바 이미지들
-	
 	private ImageIcon vavaIc; // 기본 이미지
 	private ImageIcon hitIc; // 충돌 이미지
-	private ImageIcon attackIc; // 공격 이미지
-	//private ImageIcon jumpIc; // 점프 이미지
-	//private ImageIcon doubleJumpIc; // 2단 점프 이미지
-	private ImageIcon fallIc; // 2단 점프 후 낙하 이미지
+	private ImageIcon attackingIc; // 공격 이미지
+	private ImageIcon vavaJumpIc; // 점프 이미지
+	private ImageIcon doubleJumpIc; // 2단 점프 이미지
+	private ImageIcon jumpFallIc; // 2단 점프 후 낙하 이미지
 	
-	public VavaImg(ImageIcon vavaIc, ImageIcon hitIc, ImageIcon attackIc, ImageIcon fallIc) {
+	public VavaImg(ImageIcon vavaIc, ImageIcon hitIc, ImageIcon attackingIc, ImageIcon jumpFallIc, ImageIcon vavaJumpIc, ImageIcon doubleJumpIc) {
 		this.vavaIc = vavaIc;
 		this.hitIc = hitIc;
-		this.attackIc = attackIc;
-		this.fallIc = fallIc;
+		this.attackingIc = attackingIc;
+		this.jumpFallIc = jumpFallIc;
+		this.vavaJumpIc = vavaJumpIc;
+		this.doubleJumpIc = doubleJumpIc;
 	}
 
 	public ImageIcon getVavaIc() {
@@ -27,10 +27,10 @@ public class VavaImg {
 		this.vavaIc = vavaIc;
 	}
 	public ImageIcon getAttackIc() {
-		return attackIc;
+		return attackingIc;
 	}
 	public void setAttackIc(ImageIcon attackIc) {
-		this.attackIc = attackIc;
+		this.attackingIc = attackIc;
 	}
 	public ImageIcon getHitIc() {
 		return hitIc;
@@ -39,10 +39,25 @@ public class VavaImg {
 		this.hitIc = hitIc;
 	}
 	public ImageIcon getFallIc() {
-		return fallIc;
+		return jumpFallIc;
 	}
 	public void setFallIc(ImageIcon fallIc) {
-		this.fallIc = fallIc;
+		this.jumpFallIc = fallIc;
 	}
-	
+
+	public ImageIcon getJumpIc() {
+		return vavaJumpIc;
+	}
+
+	public void setJumpIc(ImageIcon jumpIc) {
+		this.vavaJumpIc = jumpIc;
+	}
+
+	public ImageIcon getDoubleJumpIc() {
+		return doubleJumpIc;
+	}
+
+	public void setDoubleJumpIc(ImageIcon doubleJumpIc) {
+		this.doubleJumpIc = doubleJumpIc;
+	}
 }
