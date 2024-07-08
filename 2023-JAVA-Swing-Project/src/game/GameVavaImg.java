@@ -1,93 +1,79 @@
 package game;
 
-import java.awt.CardLayout;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import inside.VavaImg;
-import inside.Vava;
 
 public class GameVavaImg extends JPanel {
 	
-	
-	private ImageIcon ch01 = new ImageIcon("2023-JAVA-Swing-Project/img/selectCh1.png");
-	private ImageIcon start = new ImageIcon("2023-JAVA-Swing-Project/img/GameStartBtn.png");
-	
-	private JButton ch1;
-	private JButton StartBtn;
-	private Image background; // 배경 이미지 추가
-	private VavaImg vavaImg1;
-	
-	public VavaImg getVavaImg1() {
-		return vavaImg1;
-	}
-	
-	public GameVavaImg(Object o) {
-		// 시작 버튼
-		int screenWidth = 1080; // 창의 폭
-		int buttonWidth = 291; // 버튼의 폭
+    // 캐릭터 이미지
+    private ImageIcon ch01 = new ImageIcon("img/vavaUI/vava.png");
+    // 시작 버튼 이미지
+    private ImageIcon start = new ImageIcon("img/vavaUI/button.png");
+    
+    // 배경 이미지
+    private JLabel backScreen;
+    // 시작 버튼
+    private JButton StartB;
+    // 캐릭터 이미지를 저장할 객체
+    private VavaImg vava;
 
-		// 창의 가운데에 버튼을 위치시키기 위한 X 좌표 계산
-		int xCoordinate = (screenWidth - buttonWidth) / 2;
-		
-		StartBtn = new JButton(start);
-		StartBtn.setName("StartBtn");
-		StartBtn.addMouseListener((MouseListener) o);
-		//StartBtn.setBounds(254, 500, 291, 81);
-		StartBtn.setBounds(xCoordinate, 500, 291, 81);
-		add(StartBtn);
-		StartBtn.setBorderPainted(false);
-		StartBtn.setContentAreaFilled(false);
-		StartBtn.setFocusPainted(false);
-		
-		ch1 = new JButton(ch01);
-		ch1.setName("ch1");
-		
-		ch1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				
-        		vavaImg1 = new VavaImg(new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_origin.gif"), 
-        				new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_attack.png"), 
-        				new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_jumpend.png"),
-        				new ImageIcon("2023-JAVA-Swing-Project/img/vava/player_down.gif")); // 대충 아무거나 넣어둠
-			}
-		});
-		
-		ch1.setBounds(90, 102, 150, 200);
-		add(ch1);
-		ch1.setBorderPainted(false);
-		ch1.setContentAreaFilled(false);
-		ch1.setFocusPainted(false);
-		/*
-		// 배경
-		JLabel selectBg = new JLabel("");
-		selectBg.setForeground(Color.ORANGE);
-		selectBg.setHorizontalAlignment(SwingConstants.CENTER);
-		selectBg.setIcon(new ImageIcon("img/backTest.png"));
-		selectBg.setBounds(0, 0, 784, 461);
-		add(selectBg);
-*/
-		// 배경 이미지
-        background = new ImageIcon("2023-JAVA-Swing-Project/img/backTest.png").getImage();
-	}
-	
-	 @Override
-	 protected void paintComponent(Graphics g) {
-		 super.paintComponent(g);
-	        // 배경 이미지 그리기
-		 g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-	 }
+    // 캐릭터 이미지를 반환하는 메서드
+    public VavaImg getVava() {
+        return vava;
+    }
+
+    public GameVavaImg(Object object) {
+
+        // 캐릭터 버튼 (눌러도 아무 동작 없음)
+        JButton ch1 = new JButton(ch01);
+        ch1.setName("ch1");
+        ch1.setBounds(50, 102, 292, 282);
+        add(ch1);
+        ch1.setBorderPainted(false);
+        ch1.setContentAreaFilled(false);
+        ch1.setFocusPainted(false);
+        
+        // 시작 버튼
+        StartB = new JButton(start);
+        StartB.setName("start");
+        StartB.addMouseListener((MouseListener) object);
+        StartB.setBounds(410, 310, 291, 81);
+        add(StartB);
+        StartB.setBorderPainted(false);
+        StartB.setContentAreaFilled(false);
+        StartB.setFocusPainted(false);
+
+        // 배경
+        backScreen = new JLabel("");
+        backScreen.setIcon(new ImageIcon("img/vavaUI/backScreen.png"));
+        backScreen.setBounds(0, 0, 784, 461);
+        add(backScreen);
+
+        // 초기 캐릭터 이미지 설정
+        vava = new VavaImg(new ImageIcon("img/vava/vava_walk.gif"),
+                new ImageIcon("img/vava/vava_hit.png"),
+                new ImageIcon("img/vava/vava_attack.gif"),
+                new ImageIcon("img/vava/vava_fall.png"),
+                new ImageIcon("img/vava/vava_jump.png"),
+                new ImageIcon("img/vava/vava_jump.png"));
+    }
+    
+    @Override
+    protected void paintComponent(java.awt.Graphics g) {
+        super.paintComponent(g);
+     // 배경 이미지를 다시 그려서 크기를 조절
+        if (backScreen.getIcon() != null) {
+            g.drawImage(((ImageIcon) backScreen .getIcon()).getImage(), 0, 0, getWidth(), getHeight(), this);
+        }
+    }
 }

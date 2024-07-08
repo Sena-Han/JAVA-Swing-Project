@@ -7,10 +7,10 @@ public class Vava {
 	private Image image; // 바바 이미지
 
 	// 바바 크기 및 좌표
-	private int x = 0;
+	private int x = 160;
 	private int y = 0;
-	private int width = 0;
-	private int height = 0;
+	private int width = 80;
+	private int height = 120;
 
 	private int hp = 1000; // 바바 체력
 	private int alpha = 255; // 바바 투명도
@@ -23,6 +23,8 @@ public class Vava {
 
 	private boolean jump = false; // 점프
 	private boolean fall = false; // 낙하
+	private boolean attack = false; // 공격
+	private boolean giant = false; // 거대화 상태
 	
 	private boolean invincible = false; // 무적
 
@@ -109,6 +111,14 @@ public class Vava {
 	public void setInvincible(boolean invincible) {
 		this.invincible = invincible;
 	}
+	
+	public boolean isGiant() {
+	    return giant;
+	}
+
+	public void setGiant(boolean giant) {
+	    this.giant = giant;
+	}
 
 	public boolean isFall() {
 		return fall;
@@ -141,39 +151,34 @@ public class Vava {
 	public void setCountAttack(int countAttack) {
 		this.countAttack = countAttack;
 	}
-	private boolean isGiant; // 거대화 아이템 사용 여부 플래그
-    private boolean isBooster; // 부스터 아이템 사용 여부 플래그
 
-    public boolean isGiant() {
-        return isGiant;
+	public boolean isAttack() {
+		return attack;
+	}
+
+	public void setAttack(boolean attack) {
+		this.attack = attack;
+	}
+	public void applyBoost() {
+		setFastTime(8);
     }
 
-    public void setGiant(boolean giant) {
-        isGiant = giant;
+    public void resetBoost() {
+    	setFastTime(0); 
+    }
+    
+    public void applyGiant() {
+		int currentHeight = getHeight();
+		int newHeight = currentHeight + 50;
+		setHeight(newHeight);
+		
+		int currentWidth = getWidth();
+		int newWidth= currentWidth + 50;
+		setWidth(newWidth);
     }
 
-    public boolean isBooster() {
-        return isBooster;
-    }
-
-    public void setBooster(boolean booster) {
-        isBooster = booster;
-    }
-	public void updateItemDurations() {
-        if (fastTime > 0) {
-            fastTime--;
-            if (fastTime == 0) {
-                // 부스터 효과 만료
-                
-            }
-        }
-
-        if (bigTime > 0) {
-            bigTime--;
-            if (bigTime == 0) {
-                // 거대화 효과 만료
-                
-            }
-        }
-    }
+    public void resetGiant() {
+    	setWidth(getWidth() -50); // 원상태로
+    	setHeight(getHeight() -50); // 원상태로
+    	}
 }
